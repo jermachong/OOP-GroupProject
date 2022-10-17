@@ -15,7 +15,7 @@ class Person{
 }
 
 class Student extends Person{
-
+    Super(fullName); 
 }
 class Employee extends Person{
 
