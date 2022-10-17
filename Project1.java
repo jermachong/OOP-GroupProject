@@ -11,7 +11,7 @@
 
 class Person{
     String fullName; 
-
+    int id;
 }
 
 class Student extends Person{
@@ -28,7 +28,7 @@ class Faculty extends Employee{
 class Staff extends Employee{
 
 }
-
+// penis
 class Personnel extends Person{
     
 }
