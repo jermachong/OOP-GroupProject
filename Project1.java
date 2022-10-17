@@ -18,7 +18,7 @@ class Student extends Person{
     Super(fullName, id); 
 }
 class Employee extends Person{
-
+    Super(fullName, id); 
 }
 
 class Faculty extends Employee{
