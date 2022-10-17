@@ -1,0 +1,35 @@
+/*
+ * Project 1
+ * Jeremy Achong, Jaime Chea
+ */
+
+ public class Project1 {
+    public static void main(String[] args){
+
+    }
+ }
+
+class Person{
+    String fullName; 
+
+}
+
+class Student extends Person{
+
+}
+class Employee extends Person{
+
+}
+
+class Faculty extends Employee{
+
+}
+
+class Staff extends Employee{
+
+}
+
+class Personnel extends Person{
+    
+}
+
