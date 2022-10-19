@@ -121,7 +121,7 @@ class Student extends Person{
 
     //prints the student's tution invoice
     public void tuitionInvoice(String id){
-        printPersonInfo(); 
+        printPersonInfo(); //Prints seperating line + Student's info. 
     }
 }
 class Employee extends Person{
