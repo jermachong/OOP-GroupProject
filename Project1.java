@@ -76,12 +76,53 @@ class Person{
 
     //toString
     public String toString(){
-        return "[" + 
+        return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; 
+    }
+
+    //Other functions
+
+    //Print out full name and ID
+    public void printPersonInfo(){
+        System.out.println("---------------------------------------------------------------------------\n\n");
+        System.out.println(fullName + "\t\t" + id); 
     }
 }
 
 class Student extends Person{
     Super(fullName, id); 
+
+    private double gpa; 
+    private int creditHours; 
+
+    //Setters
+    public void setGPA(double gpa){
+        this.gpa = gpa; 
+    }
+    public void setCreditHours(int creditHours){
+        this.creditHours = creditHours; 
+    }
+
+    //Getters
+    public double getGPA(){
+        return gpa; 
+    }
+    public int getCreditHours(){
+        return creditHours; 
+    }
+
+    //Constructor
+    public Student(String fullName, String id, double gpa, int creditHours){
+        super(fullName, id);
+        this.gpa = gpa; 
+        this.creditHours = creditHours; 
+    }
+    
+    //Other functions
+
+    //prints the student's tution invoice
+    public void tuitionInvoice(String id){
+        printPersonInfo(); 
+    }
 }
 class Employee extends Person{
     Super(fullName, id); 
@@ -96,10 +137,6 @@ class Faculty extends Employee{
 class Staff extends Employee{
     Super(fullName, id); 
 }
-<<<<<<< HEAD
-
-class Personnel extends Person{
-=======
 
 //Creates array of Person
 class Personnel{
@@ -112,7 +149,6 @@ class Personnel{
     public Person[] getList(){
         return list; 
     }
->>>>>>> c101fcfd7ce46b82b5cfa307de3c2b7b544eb167
     
 }
 
