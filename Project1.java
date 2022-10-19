@@ -61,7 +61,7 @@ import java.util.Scanner;
     }
  }
 
-class Person{
+abstract class Person{
     String fullName; 
     int id;
     private String fullName; 
@@ -100,11 +100,8 @@ class Person{
 
     //Other functions
 
-    //Print out full name and ID
-    public void printPersonInfo(){
-        System.out.println("---------------------------------------------------------------------------\n\n");
-        System.out.println(fullName + "\t\t" + id); 
-    }
+    //Abstract function to be overriden in Student, Fac, and Staff
+    public abstract void print();
 }
 
 class Student extends Person{ 
@@ -141,16 +138,17 @@ class Student extends Person{
         printPersonInfo(); //Prints seperating line + Student's info. 
     }
 }
-class Employee extends Person{
+abstract class Employee extends Person{
+    private String department;
 
 }
 
 class Faculty extends Employee{
-
+    private String rank;
 }
 
 class Staff extends Employee{
-
+    private String status; 
 }
 
 //Creates array of Person
