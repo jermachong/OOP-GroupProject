@@ -10,8 +10,24 @@
  }
 
 class Person{
-    String fullName; 
-    int id;
+    private String fullName; 
+    private int id;
+
+    //Setters
+    public void setFullName(String fullName){
+        this.fullName = fullName; 
+    }
+    public void setID(int id){
+        this.id = id; 
+    }
+
+    //Getters
+    public String getFullName(){
+        return fullName; 
+    }
+    public int getID(){
+        return id; 
+    }
 }
 
 class Student extends Person{
@@ -19,14 +35,16 @@ class Student extends Person{
 }
 class Employee extends Person{
     Super(fullName, id); 
+    private String department; 
 }
 
 class Faculty extends Employee{
+    Super(fullName, id); 
 
 }
 
 class Staff extends Employee{
-
+    Super(fullName, id); 
 }
 
 //Creates array of Person
