@@ -138,8 +138,6 @@ import java.util.Scanner;
  
 
 abstract class Person{
-    String fullName; 
-    int id;
     private String fullName; 
     private String id;
 
@@ -173,16 +171,18 @@ abstract class Person{
     public String toString(){
         return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; 
     }
-
-    //Other functions
-
+    
     //Abstract function to be overriden in Student, Fac, and Staff
     public abstract void print();
+
+
+    //Print out full name and ID, useful for all print()
+    public void printPersonInfo(){
+        System.out.println(fullName + "\t\t" + id); 
+    } 
 }
 
 class Student extends Person{ 
-    Super(fullName, id); 
-
     private double gpa; 
     private int creditHours; 
 
@@ -206,28 +206,85 @@ class Student extends Person{
     public Student(String fullName, String id, double gpa, int creditHours){
         super(fullName, id);
         this.gpa = gpa; 
-        this.creditHours = creditHours;
+        this.creditHours = creditHours; 
     }
-    
-    //Other functions
 
-    //prints the student's tution invoice
-    public void tuitionInvoice(String id){
-        printPersonInfo(); //Prints seperating line + Student's info. 
+    //prints the student's tution invoice NOT FINISHED
+    public void print(){
+        super.printPersonInfo(); //Prints seperating line + Student's info.
     }
 }
+
 abstract class Employee extends Person{
-    private String department;
+    private String department; //mathematics, engineering or sciences
+
+    //Setters
+    public void setDepartment(String department){
+        this.department = department; 
+    }
+
+    //Getters
+    public String getDepartment(){
+        return department; 
+    }
+
+    //Constructors
+    public Employee(String fullName, String id, String department){
+        super(fullName,id);
+        this.department = department; 
+    }
 
 }
 
 class Faculty extends Employee{
-    private String rank;
+    private String rank; //professor or adjunct
+
+    //Setters
+    public void setRank(String rank){
+        this.rank = rank; 
+    }
+
+    //Getters
+    public String getRank(){
+        return rank;
+    }
+
+    //Constructors
+    public Faculty(String fullName, String id, String department, String rank){
+        super(fullName, id, department);
+        this.rank = rank;
+    }
+
+    //print info for faculty (department + rank)
+    public void print(){
+
+    }
 
 }
 
 class Staff extends Employee{
-    private String status; 
+    private String status; //part time or full time
+
+    //Setters
+    public void setStatus(String status){
+        this.status = status; 
+    }
+
+    //Getters 
+    public String getStatus(){
+        return status; 
+    }
+
+    //Constructors
+    public Staff(String fullName, String id, String department, String status){
+        super(fullName, id, department);
+        this.status = status; 
+    }
+
+    //print info for staff (department + status)
+    public void print(){
+
+    }
 }
 
 //Creates array of Person
