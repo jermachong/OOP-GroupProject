@@ -17,11 +17,28 @@ import java.util.Scanner;
         System.out.println("5 - Enter the information of a staff member");
         System.out.println("6 - Print the information of a staff member");
         System.out.println("7 - Exit Program");
-        System.out.println("        \nEnter your selection: ");
+        System.out.println("\n    Enter your selection: ");
         int selection = myScan.nextInt();
 
         if(selection == 1){
-            System.out.println("");
+            System.out.println("Enter the faculty info:");
+            // Get Name
+            System.out.println("    Name of the faculty member: ");
+            String newName = myScan.nextLine();
+            // Get ID
+            System.out.println("ID: ");
+            String newID = myScan.nextLine();
+            // Get Rank
+            do{
+                System.out.println("Rank: ")
+                String newRank = myScan.nextLine();
+                newRank = newRank.toLowerCase(); // make the string all lowercase to compare to accepted ranks
+
+                if(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
+                    System.out.println(newRank + " is invalid");
+            } while(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
+
+             
         }
         else if(selection == 2){
 
@@ -45,6 +62,10 @@ import java.util.Scanner;
  }
 
 class Person{
+<<<<<<< HEAD
+    String fullName; 
+    int id;
+=======
     private String fullName; 
     private String id;
 
@@ -86,6 +107,7 @@ class Person{
         System.out.println("---------------------------------------------------------------------------\n\n");
         System.out.println(fullName + "\t\t" + id); 
     }
+>>>>>>> 05e6a5de788b6d1ec842d1e27c774a340c1ff026
 }
 
 class Student extends Person{
@@ -126,16 +148,14 @@ class Student extends Person{
 }
 class Employee extends Person{
     Super(fullName, id); 
-    private String department; 
 }
 
 class Faculty extends Employee{
-    Super(fullName, id); 
 
 }
 
 class Staff extends Employee{
-    Super(fullName, id); 
+
 }
 
 //Creates array of Person
