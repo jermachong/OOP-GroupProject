@@ -46,13 +46,13 @@ import java.util.Scanner;
 
 class Person{
     private String fullName; 
-    private int id;
+    private String id;
 
     //Setters
     public void setFullName(String fullName){
         this.fullName = fullName; 
     }
-    public void setID(int id){
+    public void setID(String id){
         this.id = id; 
     }
 
@@ -60,8 +60,23 @@ class Person{
     public String getFullName(){
         return fullName; 
     }
-    public int getID(){
+    public String getID(){
         return id; 
+    }
+
+    //Constructor
+    public Person(){
+        fullName = "None"; 
+        id = "00"; 
+    }
+    public Person(String fullName, int id){
+        this.fullName = fullName;  
+        this.id = id; 
+    }
+
+    //toString
+    public String toString(){
+        return "[" + 
     }
 }
 
