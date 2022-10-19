@@ -1,6 +1,6 @@
 /*
  * Project 1
- * Jeremy Achong, Jaime Chea
+ * Jeremy Achong, Jaime Chea, and Grace Maroon
  */
 
  public class Project1 {
