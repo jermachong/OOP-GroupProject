@@ -62,10 +62,8 @@ import java.util.Scanner;
  }
 
 class Person{
-<<<<<<< HEAD
     String fullName; 
     int id;
-=======
     private String fullName; 
     private String id;
 
@@ -90,7 +88,7 @@ class Person{
         fullName = "None"; 
         id = "00"; 
     }
-    public Person(String fullName, int id){
+    public Person(String fullName, String id){
         this.fullName = fullName;  
         this.id = id; 
     }
@@ -107,12 +105,9 @@ class Person{
         System.out.println("---------------------------------------------------------------------------\n\n");
         System.out.println(fullName + "\t\t" + id); 
     }
->>>>>>> 05e6a5de788b6d1ec842d1e27c774a340c1ff026
 }
 
-class Student extends Person{
-    Super(fullName, id); 
-
+class Student extends Person{ 
     private double gpa; 
     private int creditHours; 
 
@@ -147,7 +142,7 @@ class Student extends Person{
     }
 }
 class Employee extends Person{
-    Super(fullName, id); 
+
 }
 
 class Faculty extends Employee{
@@ -161,8 +156,8 @@ class Staff extends Employee{
 //Creates array of Person
 class Personnel{
     private Person[] list; 
-    public PersonList() {
-        list = new Book[100]; 
+    public Personnel() {
+        list = new Person[100]; 
     }
 
     //retrieve array of Persons
