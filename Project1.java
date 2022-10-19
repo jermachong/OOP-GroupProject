@@ -123,15 +123,12 @@ abstract class Person{
     public String toString(){
         return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; 
     }
-
-    //Other functions
-
     
     //Abstract function to be overriden in Student, Fac, and Staff
     public abstract void print();
 
 
-    //Print out full name and ID
+    //Print out full name and ID, useful for all print()
     public void printPersonInfo(){
         System.out.println(fullName + "\t\t" + id); 
     } 
@@ -163,10 +160,8 @@ class Student extends Person{
         this.gpa = gpa; 
         this.creditHours = creditHours; 
     }
-    
-    //Other functions
 
-    //prints the student's tution invoice
+    //prints the student's tution invoice NOT FINISHED
     public void print(){
         super.printPersonInfo(); //Prints seperating line + Student's info.
     }
@@ -212,8 +207,9 @@ class Faculty extends Employee{
         this.rank = rank;
     }
 
+    //print info for faculty (department + rank)
     public void print(){
-        
+
     }
 
 }
@@ -237,7 +233,7 @@ class Staff extends Employee{
         this.status = status; 
     }
 
-    //print info for staff
+    //print info for staff (department + status)
     public void print(){
 
     }
