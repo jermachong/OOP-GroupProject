@@ -25,9 +25,13 @@ import java.util.Scanner;
             // Get Name
             System.out.println("    Name of the faculty member: ");
             String newName = myScan.nextLine();
+            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+            
             // Get ID
             System.out.println("    ID: ");
             String newID = myScan.nextLine();
+            newID = newID.toLowerCase(); // make string all lowercase
+            
             // Get Rank
             do{
                 System.out.println("    Rank: ")
@@ -37,19 +41,21 @@ import java.util.Scanner;
                 if(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
                     System.out.println(newRank + " is invalid");
             } while(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
-
+            // Get Department
             do{
                 System.out.println("    Department: ")
                 String newDepartment = myScan.nextLine();
-                newRank = newDepartment.toLowerCase(); // make the string all lowercase to compare to accepted ranks
+                newDepartment = newDepartment.toLowerCase(); // make the string all lowercase to compare to accepted ranks
 
                 if(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
                     System.out.println(newDepartment + " is invalid");
             } while(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
-            // create new Faculty object and add this info to it/add to Person array
-            // create new Faculty 'f' with constructor?
-            // Faculty f = new Faculty() 
-
+            
+            // create new Faculty object using constructor and add this info to it/add to Person array
+            newRank = newRank.substring(0,1).toUpperCase() + newRank.substring(1).toLowerCase();
+            newDepartment = newDepartment.substring(0,1).toUpperCase() + newDepartment.substring(1).toLowerCase();
+            // Faculty f = new Faculty(newName, newID, newRank, newDepartment); 
+            // add to List[]
             System.out.println("Faculty added!");
             }
         }
@@ -58,38 +64,82 @@ import java.util.Scanner;
             // Get Name
             System.out.println("    Name of the student: ");
             String newName = myScan.nextLine();
+            
             // Get ID
             System.out.println("    ID: ");
             String newID = myScan.nextLine();
+            
             // Get GPA
             System.out.println("    GPA: ")
             double newGPA = myScan.nextDouble();
+            
             // Get Credit Hours
             System.out.println("    Credit Hours: ");
             int newHours = myScan.nextInt();
 
-            // Create Student 's', add info. to 's', add to Person[], 
+            // Create Student 's', add info. to 's', add to List[], 
+            Student s = new Student(newName, newID, newGPA, newHours)
+            // add s to List[]
             System.println.out("Student added!")
         }
         else if(selection == 3){
-
+            System.out.println("    Enter the Student's ID: ");
+            String inputID = myScan.nextLine();
+            System.out.println("    Here is the Student's tuition invoice");
+            tuitionInvoice(inputID);
         }
         else if(selection == 4){
-
+            System.out.println("    Enter the Faculty ID: ");
+            String inputID = myScan.nextLine();
+            inputID = inputID.toLowerCase();
+            System.out.println("    Here is the Faculty information");
+            // printInformation(inputID)
         }
         else if(selection == 5){
+            System.out.println("Enter the staff info:");
+            // Get Name
+            System.out.println("    Name of the staff member: ");
+            String newName = myScan.nextLine();
+            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+            
+            // Get ID
+            System.out.println("    ID: ");
+            String newID = myScan.nextLine();
+            newID = newID.toLowerCase(); // make string all lowercase
+            
+            // Get department
+            do{
+                System.out.println("    Department: ")
+                String newDepartment = myScan.nextLine();
+                newDepartment = newDepartment.toLowerCase(); // make the string all lowercase to compare to accepted ranks
 
+                if(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
+                    System.out.println(newDepartment + " is invalid");
+            } while(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
+            // Get Status
+            System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
+            String inputStatus = myScan.nextLine();
+            inputStatus = inputStatus.toLowerCase();
+
+            // assign info to new object, add to List[]
+            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
         }
         else if(selection == 6){
-
+            System.out.println("    Enter the Staff ID: ");
+            String inputID = myScan.nextLine();
+            inputID = inputID.toLowerCase();
+            System.out.println("    Here is the Staff information");
+            // printInformation(inputID)
         }
         else if(selection == 7){
 
         }
     }
- }
+ 
 
 abstract class Person{
+    String fullName; 
+    int id;
     private String fullName; 
     private String id;
 
@@ -123,18 +173,16 @@ abstract class Person{
     public String toString(){
         return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; 
     }
-    
+
+    //Other functions
+
     //Abstract function to be overriden in Student, Fac, and Staff
     public abstract void print();
-
-
-    //Print out full name and ID, useful for all print()
-    public void printPersonInfo(){
-        System.out.println(fullName + "\t\t" + id); 
-    } 
 }
 
 class Student extends Person{ 
+    Super(fullName, id); 
+
     private double gpa; 
     private int creditHours; 
 
@@ -158,85 +206,28 @@ class Student extends Person{
     public Student(String fullName, String id, double gpa, int creditHours){
         super(fullName, id);
         this.gpa = gpa; 
-        this.creditHours = creditHours; 
+        this.creditHours = creditHours;
     }
+    
+    //Other functions
 
-    //prints the student's tution invoice NOT FINISHED
-    public void print(){
-        super.printPersonInfo(); //Prints seperating line + Student's info.
+    //prints the student's tution invoice
+    public void tuitionInvoice(String id){
+        printPersonInfo(); //Prints seperating line + Student's info. 
     }
 }
-
 abstract class Employee extends Person{
-    private String department; //mathematics, engineering or sciences
-
-    //Setters
-    public void setDepartment(String department){
-        this.department = department; 
-    }
-
-    //Getters
-    public String getDepartment(){
-        return department; 
-    }
-
-    //Constructors
-    public Employee(String fullName, String id, String department){
-        super(fullName,id);
-        this.department = department; 
-    }
+    private String department;
 
 }
 
 class Faculty extends Employee{
-    private String rank; //professor or adjunct
-
-    //Setters
-    public void setRank(String rank){
-        this.rank = rank; 
-    }
-
-    //Getters
-    public String getRank(){
-        return rank;
-    }
-
-    //Constructors
-    public Faculty(String fullName, String id, String department, String rank){
-        super(fullName, id, department);
-        this.rank = rank;
-    }
-
-    //print info for faculty (department + rank)
-    public void print(){
-
-    }
+    private String rank;
 
 }
 
 class Staff extends Employee{
-    private String status; //part time or full time
-
-    //Setters
-    public void setStatus(String status){
-        this.status = status; 
-    }
-
-    //Getters 
-    public String getStatus(){
-        return status; 
-    }
-
-    //Constructors
-    public Staff(String fullName, String id, String department, String status){
-        super(fullName, id, department);
-        this.status = status; 
-    }
-
-    //print info for staff (department + status)
-    public void print(){
-
-    }
+    private String status; 
 }
 
 //Creates array of Person
