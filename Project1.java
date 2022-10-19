@@ -28,8 +28,18 @@ class Faculty extends Employee{
 class Staff extends Employee{
 
 }
-// penis
-class Personnel extends Person{
+
+//Creates array of Person
+class Personnel{
+    private Person[] list; 
+    public PersonList() {
+        list = new Book[100]; 
+    }
+
+    //retrieve array of Persons
+    public Person[] getList(){
+        return list; 
+    }
     
 }
 
