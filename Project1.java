@@ -9,6 +9,8 @@ import java.util.Scanner;
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
 
+        Person personArr = new Personnel();  //Array of people
+
         System.out.println("Choose one of the options:");
         System.out.println("1 - Enter the information a faculty");
         System.out.println("2 - Enter the information of a student");
@@ -58,6 +60,16 @@ import java.util.Scanner;
                 else break; 
 
             }while(true);
+
+            //Loop to iterate through Personnel and add to Person
+            for(int i = 0; i < personArr.getList().length; i++)
+            {
+                if(personArr.getList()[i] == null) 
+                {
+                    personArr.getList()[i] = b;
+                    break; 
+                }
+            }
 
         }
         else if(selection == 2){
@@ -304,6 +316,8 @@ class Personnel{
     public Person[] getList(){
         return list; 
     }
+
+
     
     }
 
