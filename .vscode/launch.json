@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Project1",
+            "request": "launch",
+            "mainClass": "Project1",
+            "projectName": "OOP-GroupProject_70d594ba"
+        },
+        {
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
