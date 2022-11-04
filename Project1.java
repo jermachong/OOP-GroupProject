@@ -5,6 +5,8 @@
 
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
  public class Project1 {
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
@@ -24,24 +26,42 @@ import java.util.Scanner;
 
         //Create Faculty
         if(selection == 1){
-            String newName, newId, newRank, newDepartment; 
+
             System.out.println("Enter the faculty info:");
-            // Get Name
-            System.out.println("    Name of the faculty member: ");
-            newName = myScan.nextLine();
-            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+            String newName, newID, newDepartment, newRank;
+
+            //Get Name
+            do{
+                System.out.println("    Name of the faculty member: ");
+                newName = myScan.nextLine();
+                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                {
+                    System.out.println("Please enter a name");
+                    continue; 
+                }
+                else break;
+            }while(true);
+            
             
             // Get ID
-            
-            System.out.println("    ID: ");
-            String newID = myScan.nextLine();
-            newID = newID.toLowerCase(); // make string all lowercase
-            
+            do{
+                System.out.println("    ID: ");
+                newID = myScan.nextLine();
+                newID = newID.toLowerCase(); // make string all lowercase
+                if(newID.length() > 6 || newID.equals(null))
+                {
+                    System.out.println(newID + " is invalid");
+                    continue;
+                }
+                else break; 
+
+            }while(true); 
 
             // Get Department
             do{
                 System.out.println("    Department: ");
                 newDepartment = myScan.nextLine(); 
+                //look for math, eng, and science
                 if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
                 {
                     System.out.println(newDepartment + " is invalid"); 
