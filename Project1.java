@@ -9,6 +9,8 @@ import java.util.Scanner;
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
 
+        Person personArr = new Personnel();  //Array of people
+
         System.out.println("Choose one of the options:");
         System.out.println("1 - Enter the information a faculty");
         System.out.println("2 - Enter the information of a student");
@@ -34,30 +36,41 @@ import java.util.Scanner;
             
             // Get Rank
             do{
-                System.out.println("    Rank: ")
-                String newRank = myScan.nextLine();
-                newRank = newRank.toLowerCase(); // make the string all lowercase to compare to accepted ranks
+                System.out.println("    Rank: ");
+                String newRank = myScan.nextLine(); //if the input is not equal to the two cases, then it repeats the loop. 
+                if(!newRank.toLowerCase().equals("profressor") || !newRank.toLowerCase().equals("adjunt"))
+                {
+                    System.out.println(newRank + " is invalid"); 
+                    continue; 
+                }
+                else break;  //input was valid, break out of the do while loop and move onto retrieving department.
+            }
+            while(true);
+            
 
-                if(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
-                    System.out.println(newRank + " is invalid");
-            } while(newRank.compareTo("professor") == 1 || newRank.compareTo("adjunct") == 1)
             // Get Department
             do{
-                System.out.println("    Department: ")
-                String newDepartment = myScan.nextLine();
-                newDepartment = newDepartment.toLowerCase(); // make the string all lowercase to compare to accepted ranks
+                System.out.println("    Department: ");
+                String newDepartment = myScan.nextLine(); 
+                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
+                {
+                    System.out.println(newDepartment + " is invalid"); 
+                    continue; 
+                }
+                else break; 
 
-                if(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
-                    System.out.println(newDepartment + " is invalid");
-            } while(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
-            
-            // create new Faculty object using constructor and add this info to it/add to Person array
-            newRank = newRank.substring(0,1).toUpperCase() + newRank.substring(1).toLowerCase();
-            newDepartment = newDepartment.substring(0,1).toUpperCase() + newDepartment.substring(1).toLowerCase();
-            // Faculty f = new Faculty(newName, newID, newRank, newDepartment); 
-            // add to List[]
-            System.out.println("Faculty added!");
+            }while(true);
+
+            //Loop to iterate through Personnel and add to Person
+            for(int i = 0; i < personArr.getList().length; i++)
+            {
+                if(personArr.getList()[i] == null) 
+                {
+                    personArr.getList()[i] = b;
+                    break; 
+                }
             }
+
         }
         else if(selection == 2){
             System.out.println("Enter the student info:");
@@ -70,7 +83,7 @@ import java.util.Scanner;
             String newID = myScan.nextLine();
             
             // Get GPA
-            System.out.println("    GPA: ")
+            System.out.println("    GPA: ");
             double newGPA = myScan.nextDouble();
             
             // Get Credit Hours
@@ -78,15 +91,15 @@ import java.util.Scanner;
             int newHours = myScan.nextInt();
 
             // Create Student 's', add info. to 's', add to List[], 
-            Student s = new Student(newName, newID, newGPA, newHours)
+            Student s = new Student(newName, newID, newGPA, newHours);
             // add s to List[]
-            System.println.out("Student added!")
+            System.out.println("Student added!");
         }
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
-            tuitionInvoice(inputID);
+            tuitionInvoice(inputID); //waiting on this to be built
         }
         else if(selection == 4){
             System.out.println("    Enter the Faculty ID: ");
@@ -109,13 +122,17 @@ import java.util.Scanner;
             
             // Get department
             do{
-                System.out.println("    Department: ")
-                String newDepartment = myScan.nextLine();
-                newDepartment = newDepartment.toLowerCase(); // make the string all lowercase to compare to accepted ranks
+                System.out.println("    Department: ");
+                String newDepartment = myScan.nextLine(); 
+                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
+                {
+                    System.out.println(newDepartment + " is invalid"); 
+                    continue; 
+                }
+                else break; 
+    
+            }while(true);
 
-                if(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
-                    System.out.println(newDepartment + " is invalid");
-            } while(newDepartment.compareTo("mathematics") == 1 || newDepartment.compareTo("engineering") == 1 || newDepartment.compareTo("sciences") == 1)
             // Get Status
             System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
             String inputStatus = myScan.nextLine();
@@ -135,6 +152,7 @@ import java.util.Scanner;
 
         }
     }
+}
  
 
 abstract class Person{
@@ -298,6 +316,9 @@ class Personnel{
     public Person[] getList(){
         return list; 
     }
+
+
     
-}
+    }
+
 
