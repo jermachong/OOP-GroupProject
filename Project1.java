@@ -9,7 +9,7 @@ import java.util.Scanner;
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
 
-        Person personArr = new Personnel();  //Array of people
+        Personnel personArr = new Personnel();  //Array of people
 
         System.out.println("Choose one of the options:");
         System.out.println("1 - Enter the information a faculty");
@@ -22,22 +22,39 @@ import java.util.Scanner;
         System.out.println("\n    Enter your selection: ");
         int selection = myScan.nextInt();
 
+        //Create Faculty
         if(selection == 1){
+            String newName, newId, newRank, newDepartment; 
             System.out.println("Enter the faculty info:");
             // Get Name
             System.out.println("    Name of the faculty member: ");
-            String newName = myScan.nextLine();
+            newName = myScan.nextLine();
             // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
             
             // Get ID
+            
             System.out.println("    ID: ");
             String newID = myScan.nextLine();
             newID = newID.toLowerCase(); // make string all lowercase
             
+
+            // Get Department
+            do{
+                System.out.println("    Department: ");
+                newDepartment = myScan.nextLine(); 
+                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
+                {
+                    System.out.println(newDepartment + " is invalid"); 
+                    continue; 
+                }
+                else break; 
+
+            }while(true);
+            
             // Get Rank
             do{
                 System.out.println("    Rank: ");
-                String newRank = myScan.nextLine(); //if the input is not equal to the two cases, then it repeats the loop. 
+                newRank = myScan.nextLine(); //if the input is not equal to the two cases, then it repeats the loop. 
                 if(!newRank.toLowerCase().equals("profressor") || !newRank.toLowerCase().equals("adjunt"))
                 {
                     System.out.println(newRank + " is invalid"); 
@@ -48,30 +65,12 @@ import java.util.Scanner;
             while(true);
             
 
-            // Get Department
-            do{
-                System.out.println("    Department: ");
-                String newDepartment = myScan.nextLine(); 
-                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
-                {
-                    System.out.println(newDepartment + " is invalid"); 
-                    continue; 
-                }
-                else break; 
-
-            }while(true);
-
-            //Loop to iterate through Personnel and add to Person
-            for(int i = 0; i < personArr.getList().length; i++)
-            {
-                if(personArr.getList()[i] == null) 
-                {
-                    personArr.getList()[i] = b;
-                    break; 
-                }
-            }
+            //Create Faculty with given info
+            Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
+            personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
 
         }
+        //Create Student
         else if(selection == 2){
             System.out.println("Enter the student info:");
             // Get Name
@@ -99,7 +98,7 @@ import java.util.Scanner;
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
-            tuitionInvoice(inputID); //waiting on this to be built
+            //tuitionInvoice(inputID); //waiting on this to be built
         }
         else if(selection == 4){
             System.out.println("    Enter the Faculty ID: ");
@@ -151,7 +150,10 @@ import java.util.Scanner;
         else if(selection == 7){
 
         }
+
+        myScan.close(); //close scanner pointer
     }
+    
 }
  
 
@@ -317,8 +319,18 @@ class Personnel{
         return list; 
     }
 
-
-    
+    //find next empty spot in array and add person object to array.
+    public void addTo(Personnel list, Person p){
+        for(int i = 0; i < list.getList().length; i++)
+        {
+            if(list.getList()[i] == null)
+            {
+                list.getList()[i] = p;
+                break; 
+            }
+        }
     }
+    
+}
 
 
