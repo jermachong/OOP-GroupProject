@@ -209,9 +209,23 @@ class Student extends Person{
         this.creditHours = creditHours; 
     }
 
-    //prints the student's tution invoice NOT FINISHED
+    //prints the student's tution invoice
     public void print(){
+        //declare local variables to store the payment total and discount
+        double discount=0.0;
+        double total= 52+(this.getCreditHours()*236.45);
+     
         super.printPersonInfo(); //Prints seperating line + Student's info.
+      
+      
+      if(this.getGPA()>=3.85)//calculate discount if applicable 
+      {
+        discount=total*0.25;
+      }
+      //print for remaining invoice information
+      System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
+
+
     }
 }
 
@@ -257,6 +271,9 @@ class Faculty extends Employee{
 
     //print info for faculty (department + rank)
     public void print(){
+       System.out.println("---------------------------");//display statement
+      super.printPersonInfo();
+       System.out.println(this.getDepartment()+", "+ this.getRank()+"\n---------------------------");//display statement
 
     }
 
@@ -283,7 +300,9 @@ class Staff extends Employee{
 
     //print info for staff (department + status)
     public void print(){
-
+      System.out.println("---------------------------");//display statement
+      super.printPersonInfo();
+      System.out.println(this.getDepartment()+", "+ this.getStatus()+"\n---------------------------");//display statement
     }
 }
 
