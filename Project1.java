@@ -94,7 +94,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 
         }
         //Create Student
-        else if(selection == 2){
+        else if(selection == 2){ // Get Student info
             System.out.println("Enter the student info:");
             // Get Name
             System.out.println("    Name of the student: ");
@@ -115,12 +115,14 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             // Create Student 's', add info. to 's', add to List[], 
             Student s = new Student(newName, newID, newGPA, newHours);
             // add s to List[]
+            personArr.addTo(personArr, s);
             System.out.println("Student added!");
         }
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
+            
             //tuitionInvoice(inputID); //waiting on this to be built
         }
         else if(selection == 4){
@@ -168,6 +170,8 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
             System.out.println("    Here is the Staff information");
+            Person s = new Person();
+            s.findPerson(personArr, inputID).print();            
             // printInformation(inputID)
         }
         else if(selection == 7){
@@ -218,6 +222,19 @@ abstract class Person{
     //Abstract function to be overriden in Student, Fac, and Staff
     public abstract void print();
 
+    // Parse through the Person Array and find a target Person using an input ID
+    public Person findPerson(Personnel array, String inputID){
+        //Person targetPerson
+        //Person targetPerson = new Person(); 
+        int i; 
+        for(i = 0; i < array.getList().length; i++){
+            if(array.getList()[i].getID() == inputID){
+                //targetPerson = array.getList()[i];
+                break;
+            }
+        }
+        return array.getList()[i]; 
+    }
 
     //Print out full name and ID, useful for all print()
     public void printPersonInfo(){
@@ -255,11 +272,11 @@ class Student extends Person{
     //prints the student's tution invoice
     public void print(){
         //declare local variables to store the payment total and discount
-        double discount=0.0;
-        double total= 52+(this.getCreditHours()*236.45);
+        double discount = 0.0;
+        double total = 52 + (this.getCreditHours() * 236.45);
      
         super.printPersonInfo(); //Prints seperating line + Student's info.
-      
+
       
       if(this.getGPA()>=3.85)//calculate discount if applicable 
       {
