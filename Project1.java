@@ -63,7 +63,7 @@ import java.util.Scanner;
                 newDepartment = newDepartment.toLowerCase(); 
                 //look for math, eng, and science
                 if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
-                    System.out.println("CORRECT INPUT");//input was valid
+                    System.out.println("CORRECT INPUT");//input was valid, testing
                     break;
                 }
                 else{
@@ -128,60 +128,96 @@ import java.util.Scanner;
 
         }
         else if(selection == 4){
+            // Enter Info
             System.out.println("    Enter the Faculty ID: ");
             String inputID = myScan.next();
             inputID = inputID.toLowerCase();
+
+            // Print Info
             System.out.println("    Here is the Faculty information");
             Person.findPerson(personArr, inputID).print();
-            // printInformation(inputID)
         }
+
+        // Get Staff info, add Person to personArr
         else if(selection == 5){
+            String newName, newID, newDepartment, newStatus;
             System.out.println("Enter the staff info:");
-            // Get Name
-            System.out.println("    Name of the staff member: ");
-            String newName = myScan.next();
-            newName = newName.toLowerCase();
-            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+
+            //Get Name
+            do{
+                System.out.println("    Name of the faculty member: ");
+                newName = myScan.next();
+                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                {
+                    System.out.println("Please enter a name");
+                    continue; 
+                }
+                else break;
+            }while(true);
             
             // Get ID
-            System.out.println("    ID: ");
-            String newID = myScan.next();
-            newID = newID.toLowerCase(); // make string all lowercase
+            do{
+                System.out.println("    ID: ");
+                newID = myScan.next();
+                newID = newID.toLowerCase(); // make string all lowercase
+                if(newID.length() > 6 || newID.equals(null))
+                {
+                    System.out.println(newID + " is invalid");
+                    continue;
+                }
+                else break; 
+
+            }while(true);
             
-            // Get department
+            // Get Department
             do{
                 System.out.println("    Department: ");
-                String newDepartment = myScan.next(); 
-                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
-                {
+                newDepartment = myScan.next();
+                newDepartment = newDepartment.toLowerCase(); 
+                //look for math, eng, and science
+                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
+                    System.out.println("CORRECT INPUT");//input was valid, testing
+                    break;
+                }
+                else{
                     System.out.println(newDepartment + " is invalid"); 
                     continue; 
                 }
-                else break; 
-    
+
             }while(true);
 
             // Get Status
-            System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
-            String inputStatus = myScan.next();
-            inputStatus = inputStatus.toLowerCase();
+            do{
+                System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
+                newStatus = myScan.next();
+                newStatus = newStatus.toLowerCase();
+                if(newStatus.equals("f") || newStatus.equals("p")){
+                    break;
+                }
+                else{
+                    System.out.println(newStatus + "is invalid, enter a valid Status");
+                    continue;
+                }
+            }while(true);
 
-            // assign info to new object, add to List[]
-            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
+            // assign info to new object, add to personArr
+            Staff s = new Staff(newName, newID, newDepartment, newStatus);
+            personArr.addTo(personArr, s);
         }
+
         // Print Staff Information
         else if(selection == 6){
             System.out.println("    Enter the Staff ID: ");
             String inputID = myScan.next();
             inputID = inputID.toLowerCase();
+
+            // Print Info
             System.out.println("    Here is the Staff information");
-            
-            // Print Info,
             Person.findPerson(personArr, inputID).print();
-
         }
-        else if(selection == 7){
 
+        else if(selection == 7){
+            break;
         }
     }while(selection != 7);
 
@@ -230,7 +266,6 @@ abstract class Person{
 
     // Parse through the Person Array and find a target Person using an input ID
     public static Person findPerson(Personnel array, String inputID){
-
         //Person targetPerson
         //Person targetPerson = new Person(); 
         int i; 
