@@ -70,7 +70,7 @@ import java.util.Scanner;
             personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
             
         }
-        //Create Student
+        // Add Student
         else if(selection == 2){ // Get Student info
             System.out.println("Enter the student info:");
             // Get Name
@@ -100,17 +100,21 @@ import java.util.Scanner;
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
+
+            // Print Info.
             System.out.println("    Here is the Student's tuition invoice");
             Student.findPerson(personArr, inputID).print();
-            //tuitionInvoice(inputID); //waiting on this to be built
         }
-        else if(selection == 4){
+
+        // Add Faculty
+        else if(selection == 4){ 
             System.out.println("    Enter the Faculty ID: ");
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
+
+            // Print Info.
             System.out.println("    Here is the Faculty information");
             Person.findPerson(personArr, inputID).print();
-            // printInformation(inputID)
         }
         else if(selection == 5){
             System.out.println("Enter the staff info:");
@@ -144,7 +148,7 @@ import java.util.Scanner;
             inputStatus = inputStatus.toLowerCase();
 
             // assign info to new object, add to List[]
-            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
+            Staff s = new Staff(newName, newID, newDepartment, inputStatus);
         }
         // Print Staff Information
         else if(selection == 6){
