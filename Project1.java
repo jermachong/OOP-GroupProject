@@ -27,13 +27,13 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
         //Create Faculty
         if(selection == 1){
 
-            System.out.println("Enter the faculty info:");
             String newName, newID, newDepartment, newRank;
-
+            System.out.println("Enter the faculty info:");
+            
             //Get Name
             do{
                 System.out.println("    Name of the faculty member: ");
-                newName = myScan.nextLine();
+                newName = myScan.next();
                 if(newName.equals(null) || newName.length() == 1) //need a proper name
                 {
                     System.out.println("Please enter a name");
@@ -42,11 +42,10 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
                 else break;
             }while(true);
             
-            
             // Get ID
             do{
                 System.out.println("    ID: ");
-                newID = myScan.nextLine();
+                newID = myScan.next();
                 newID = newID.toLowerCase(); // make string all lowercase
                 if(newID.length() > 6 || newID.equals(null))
                 {
@@ -60,27 +59,31 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             // Get Department
             do{
                 System.out.println("    Department: ");
-                newDepartment = myScan.nextLine(); 
+                newDepartment = myScan.next();
+                newDepartment = newDepartment.toLowerCase(); 
                 //look for math, eng, and science
-                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
-                {
+                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
+                    System.out.println("CORRECT INPUT");//input was valid
+                    break;
+                }
+                else{
                     System.out.println(newDepartment + " is invalid"); 
                     continue; 
                 }
-                else break; 
 
             }while(true);
             
             // Get Rank
             do{
                 System.out.println("    Rank: ");
-                newRank = myScan.nextLine(); //if the input is not equal to the two cases, then it repeats the loop. 
-                if(!newRank.toLowerCase().equals("profressor") || !newRank.toLowerCase().equals("adjunt"))
-                {
+                newRank = myScan.next(); //if the input is not equal to the two cases, then it repeats the loop. 
+                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunt"))
+                    //input was valid, break out of the do while loop and move onto retrieving department.
+                    break;
+                else{
                     System.out.println(newRank + " is invalid"); 
-                    continue; 
+                    continue;
                 }
-                else break;  //input was valid, break out of the do while loop and move onto retrieving department.
             }
             while(true);
             
@@ -263,7 +266,8 @@ class Student extends Person{
         discount=total*0.25;
       }
       //print for remaining invoice information
-      System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
+      System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ 
+      " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
 
 
     }
