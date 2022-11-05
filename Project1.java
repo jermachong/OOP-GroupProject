@@ -13,6 +13,8 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 
         Personnel personArr = new Personnel();  //Array of people
 
+        int selection;
+        do{
         System.out.println("Choose one of the options:");
         System.out.println("1 - Enter the information a faculty");
         System.out.println("2 - Enter the information of a student");
@@ -22,7 +24,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
         System.out.println("6 - Print the information of a staff member");
         System.out.println("7 - Exit Program");
         System.out.println("\n    Enter your selection: ");
-        int selection = myScan.nextInt();
+        selection = myScan.nextInt();
 
         //Create Faculty
         if(selection == 1){
@@ -63,7 +65,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
                 newDepartment = newDepartment.toLowerCase(); 
                 //look for math, eng, and science
                 if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
-                    System.out.println("CORRECT INPUT");//input was valid
+                    System.out.println("CORRECT INPUT");//input was valid, testing
                     break;
                 }
                 else{
@@ -77,7 +79,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             do{
                 System.out.println("    Rank: ");
                 newRank = myScan.next(); //if the input is not equal to the two cases, then it repeats the loop. 
-                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunt"))
+                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunct"))
                     //input was valid, break out of the do while loop and move onto retrieving department.
                     break;
                 else{
@@ -91,18 +93,35 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             //Create Faculty with given info
             Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
             personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
-            
+            /*personArr.getList()[0].print();  // testing
+            if(personArr.getList()[1] != null){
+                personArr.getList()[1].print();  // testing                
+            }
+            // testing
+            String inputID;
+            inputID = myScan.next();
+            for(int i = 0; i < personArr.getList().length; i++){
+                if(personArr.getList()[i] == null){
+                    //targetPerson = array.getList()[i];
+                    //personArr.getList()[i].print();
+                    personArr.getList()[i-1].print();
+                    System.out.println("gg fuck my life " + i);
+                    break;
+                }
+            }
+            // testing*/
+
         }
         //Create Student
         else if(selection == 2){ // Get Student info
             System.out.println("Enter the student info:");
             // Get Name
             System.out.println("    Name of the student: ");
-            String newName = myScan.nextLine();
+            String newName = myScan.next();
             
             // Get ID
             System.out.println("    ID: ");
-            String newID = myScan.nextLine();
+            String newID = myScan.next();
             
             // Get GPA
             System.out.println("    GPA: ");
@@ -122,67 +141,104 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
         // Print tuition invoice for a student
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
-            String inputID = myScan.nextLine();
+            String inputID = myScan.next();
             System.out.println("    Here is the Student's tuition invoice");
             Student.findPerson(personArr, inputID).print();
 
         }
         else if(selection == 4){
+            // Enter Info
             System.out.println("    Enter the Faculty ID: ");
-            String inputID = myScan.nextLine();
+            String inputID = myScan.next();
             inputID = inputID.toLowerCase();
+
+            // Print Info
             System.out.println("    Here is the Faculty information");
             Person.findPerson(personArr, inputID).print();
-            // printInformation(inputID)
         }
+
+        // Get Staff info, add Person to personArr
         else if(selection == 5){
+            String newName, newID, newDepartment, newStatus;
             System.out.println("Enter the staff info:");
-            // Get Name
-            System.out.println("    Name of the staff member: ");
-            String newName = myScan.nextLine();
-            newName = newName.toLowerCase();
-            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+
+            //Get Name
+            do{
+                System.out.println("    Name of the faculty member: ");
+                newName = myScan.next();
+                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                {
+                    System.out.println("Please enter a name");
+                    continue; 
+                }
+                else break;
+            }while(true);
             
             // Get ID
-            System.out.println("    ID: ");
-            String newID = myScan.nextLine();
-            newID = newID.toLowerCase(); // make string all lowercase
+            do{
+                System.out.println("    ID: ");
+                newID = myScan.next();
+                newID = newID.toLowerCase(); // make string all lowercase
+                if(newID.length() > 6 || newID.equals(null))
+                {
+                    System.out.println(newID + " is invalid");
+                    continue;
+                }
+                else break; 
+
+            }while(true);
             
-            // Get department
+            // Get Department
             do{
                 System.out.println("    Department: ");
-                String newDepartment = myScan.nextLine(); 
-                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
-                {
+                newDepartment = myScan.next();
+                newDepartment = newDepartment.toLowerCase(); 
+                //look for math, eng, and science
+                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
+                    System.out.println("CORRECT INPUT");//input was valid, testing
+                    break;
+                }
+                else{
                     System.out.println(newDepartment + " is invalid"); 
                     continue; 
                 }
-                else break; 
-    
+
             }while(true);
 
             // Get Status
-            System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
-            String inputStatus = myScan.nextLine();
-            inputStatus = inputStatus.toLowerCase();
+            do{
+                System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
+                newStatus = myScan.next();
+                newStatus = newStatus.toLowerCase();
+                if(newStatus.equals("f") || newStatus.equals("p")){
+                    break;
+                }
+                else{
+                    System.out.println(newStatus + "is invalid, enter a valid Status");
+                    continue;
+                }
+            }while(true);
 
-            // assign info to new object, add to List[]
-            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
+            // assign info to new object, add to personArr
+            Staff s = new Staff(newName, newID, newDepartment, newStatus);
+            personArr.addTo(personArr, s);
         }
+
         // Print Staff Information
         else if(selection == 6){
             System.out.println("    Enter the Staff ID: ");
-            String inputID = myScan.nextLine();
+            String inputID = myScan.next();
             inputID = inputID.toLowerCase();
+
+            // Print Info
             System.out.println("    Here is the Staff information");
-            
-            // Print Info,
             Person.findPerson(personArr, inputID).print();
-
         }
+
         else if(selection == 7){
-
+            break;
         }
+    }while(selection != 7);
 
         myScan.close(); //close scanner pointer
     }
@@ -229,17 +285,17 @@ abstract class Person{
 
     // Parse through the Person Array and find a target Person using an input ID
     public static Person findPerson(Personnel array, String inputID){
-
         //Person targetPerson
         //Person targetPerson = new Person(); 
         int i; 
         for(i = 0; i < array.getList().length; i++){
-            if(array.getList()[i].getID() == inputID){
+            // System.out.println("i = " + i); // testing
+            if(array.getList()[i].getID().equals(inputID)){
                 //targetPerson = array.getList()[i];
                 break;
             }
         }
-        return array.getList()[i]; 
+        return array.getList()[i];
     }
 
     //Print out full name and ID, useful for all print()
