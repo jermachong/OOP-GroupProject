@@ -71,7 +71,7 @@ import java.util.Scanner;
 
         }
         //Create Student
-        else if(selection == 2){
+        else if(selection == 2){ // Get Student info
             System.out.println("Enter the student info:");
             // Get Name
             System.out.println("    Name of the student: ");
@@ -92,12 +92,14 @@ import java.util.Scanner;
             // Create Student 's', add info. to 's', add to List[], 
             Student s = new Student(newName, newID, newGPA, newHours);
             // add s to List[]
+            personArr.addTo(personArr, s);
             System.out.println("Student added!");
         }
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
+            
             //tuitionInvoice(inputID); //waiting on this to be built
         }
         else if(selection == 4){
@@ -120,13 +122,12 @@ import java.util.Scanner;
             newID = newID.toLowerCase(); // make string all lowercase
             
             // Get department
-            System.out.println("    Department: ");
-            String newDepartment;
             do{
-                newDepartment = myScan.nextLine(); 
+                System.out.println("    Department: ");
+                String newDepartment = myScan.nextLine(); 
                 if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
                 {
-                    System.out.println(newDepartment + " is invalid");
+                    System.out.println(newDepartment + " is invalid"); 
                     continue; 
                 }
                 else break; 
@@ -138,15 +139,15 @@ import java.util.Scanner;
             String inputStatus = myScan.nextLine();
             inputStatus = inputStatus.toLowerCase();
 
-            // assign info to new object, add to personArr
-            Staff s = new Staff(newName, newID, newDepartment, inputStatus);
-            personArr.addTo(personArr, s);
+            // assign info to new object, add to List[]
+            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
         }
         else if(selection == 6){
             System.out.println("    Enter the Staff ID: ");
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
             System.out.println("    Here is the Staff information");
+            Person.findPerson(personArr, inputID).print();            
             // printInformation(inputID)
         }
         else if(selection == 7){
@@ -158,7 +159,6 @@ import java.util.Scanner;
     
 }
  
-
 abstract class Person{
     private String fullName; 
     private String id;
@@ -197,6 +197,19 @@ abstract class Person{
     //Abstract function to be overriden in Student, Fac, and Staff
     public abstract void print();
 
+    // Parse through the Person Array and find a target Person using an input ID
+    public static Person findPerson(Personnel array, String inputID){
+        //Person targetPerson
+        //Person targetPerson = new Person(); 
+        int i; 
+        for(i = 0; i < array.getList().length; i++){
+            if(array.getList()[i].getID() == inputID){
+                //targetPerson = array.getList()[i];
+                break;
+            }
+        }
+        return array.getList()[i]; 
+    }
 
     //Print out full name and ID, useful for all print()
     public void printPersonInfo(){
@@ -231,9 +244,22 @@ class Student extends Person{
         this.creditHours = creditHours; 
     }
 
-    //prints the student's tution invoice NOT FINISHED
+    //prints the student's tution invoice
     public void print(){
+        //declare local variables to store the payment total and discount
+        double discount = 0.0;
+        double total = 52 + (this.getCreditHours() * 236.45);
+     
         super.printPersonInfo(); //Prints seperating line + Student's info.
+      
+        if(this.getGPA()>=3.85)//calculate discount if applicable 
+        {
+            discount = total * 0.25;
+        }
+        //print for remaining invoice information
+        System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
+
+
     }
 }
 
@@ -279,6 +305,9 @@ class Faculty extends Employee{
 
     //print info for faculty (department + rank)
     public void print(){
+       System.out.println("---------------------------");//display statement
+      super.printPersonInfo();
+       System.out.println(this.getDepartment()+", "+ this.getRank()+"\n---------------------------");//display statement
 
     }
 
@@ -305,7 +334,9 @@ class Staff extends Employee{
 
     //print info for staff (department + status)
     public void print(){
-
+      System.out.println("---------------------------");//display statement
+      super.printPersonInfo();
+      System.out.println(this.getDepartment()+", "+ this.getStatus()+"\n---------------------------");//display statement
     }
 }
 
