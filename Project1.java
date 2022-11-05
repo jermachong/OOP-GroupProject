@@ -5,8 +5,6 @@
 
 import java.util.Scanner;
 
-import javax.swing.plaf.synth.SynthScrollBarUI;
-
  public class Project1 {
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
@@ -93,23 +91,6 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             //Create Faculty with given info
             Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
             personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
-            /*personArr.getList()[0].print();  // testing
-            if(personArr.getList()[1] != null){
-                personArr.getList()[1].print();  // testing                
-            }
-            // testing
-            String inputID;
-            inputID = myScan.next();
-            for(int i = 0; i < personArr.getList().length; i++){
-                if(personArr.getList()[i] == null){
-                    //targetPerson = array.getList()[i];
-                    //personArr.getList()[i].print();
-                    personArr.getList()[i-1].print();
-                    System.out.println("gg fuck my life " + i);
-                    break;
-                }
-            }
-            // testing*/
 
         }
         //Create Student
