@@ -120,12 +120,13 @@ import java.util.Scanner;
             newID = newID.toLowerCase(); // make string all lowercase
             
             // Get department
+            System.out.println("    Department: ");
+            String newDepartment;
             do{
-                System.out.println("    Department: ");
-                String newDepartment = myScan.nextLine(); 
+                newDepartment = myScan.nextLine(); 
                 if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
                 {
-                    System.out.println(newDepartment + " is invalid"); 
+                    System.out.println(newDepartment + " is invalid");
                     continue; 
                 }
                 else break; 
@@ -137,8 +138,9 @@ import java.util.Scanner;
             String inputStatus = myScan.nextLine();
             inputStatus = inputStatus.toLowerCase();
 
-            // assign info to new object, add to List[]
-            // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
+            // assign info to new object, add to personArr
+            Staff s = new Staff(newName, newID, newDepartment, inputStatus);
+            personArr.addTo(personArr, s);
         }
         else if(selection == 6){
             System.out.println("    Enter the Staff ID: ");
