@@ -5,6 +5,8 @@
 
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
  public class Project1 {
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
@@ -24,43 +26,64 @@ import java.util.Scanner;
 
         //Create Faculty
         if(selection == 1){
-            String newName, newId, newRank, newDepartment; 
+
+            String newName, newID, newDepartment, newRank;
             System.out.println("Enter the faculty info:");
-            // Get Name
-            System.out.println("    Name of the faculty member: ");
-            newName = myScan.nextLine();
-            // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
+            
+            //Get Name
+            do{
+                System.out.println("    Name of the faculty member: ");
+                newName = myScan.next();
+                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                {
+                    System.out.println("Please enter a name");
+                    continue; 
+                }
+                else break;
+            }while(true);
             
             // Get ID
-            
-            System.out.println("    ID: ");
-            String newID = myScan.nextLine();
-            newID = newID.toLowerCase(); // make string all lowercase
-            
+            do{
+                System.out.println("    ID: ");
+                newID = myScan.next();
+                newID = newID.toLowerCase(); // make string all lowercase
+                if(newID.length() > 6 || newID.equals(null))
+                {
+                    System.out.println(newID + " is invalid");
+                    continue;
+                }
+                else break; 
+
+            }while(true); 
 
             // Get Department
             do{
                 System.out.println("    Department: ");
-                newDepartment = myScan.nextLine(); 
-                if(!newDepartment.toLowerCase().equals("mathematics") || !newDepartment.toLowerCase().equals("engineering") || !newDepartment.toLowerCase().equals("sciences"))
-                {
+                newDepartment = myScan.next();
+                newDepartment = newDepartment.toLowerCase(); 
+                //look for math, eng, and science
+                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
+                    System.out.println("CORRECT INPUT");//input was valid
+                    break;
+                }
+                else{
                     System.out.println(newDepartment + " is invalid"); 
                     continue; 
                 }
-                else break; 
 
             }while(true);
             
             // Get Rank
             do{
                 System.out.println("    Rank: ");
-                newRank = myScan.nextLine(); //if the input is not equal to the two cases, then it repeats the loop. 
-                if(!newRank.toLowerCase().equals("profressor") || !newRank.toLowerCase().equals("adjunt"))
-                {
+                newRank = myScan.next(); //if the input is not equal to the two cases, then it repeats the loop. 
+                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunt"))
+                    //input was valid, break out of the do while loop and move onto retrieving department.
+                    break;
+                else{
                     System.out.println(newRank + " is invalid"); 
-                    continue; 
+                    continue;
                 }
-                else break;  //input was valid, break out of the do while loop and move onto retrieving department.
             }
             while(true);
             
@@ -102,7 +125,7 @@ import java.util.Scanner;
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
             Student.findPerson(personArr, inputID).print();
-            //tuitionInvoice(inputID); //waiting on this to be built
+
         }
         else if(selection == 4){
             System.out.println("    Enter the Faculty ID: ");
@@ -152,8 +175,10 @@ import java.util.Scanner;
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
             System.out.println("    Here is the Staff information");
+            
             // Print Info,
             Person.findPerson(personArr, inputID).print();
+
         }
         else if(selection == 7){
 
@@ -204,6 +229,7 @@ abstract class Person{
 
     // Parse through the Person Array and find a target Person using an input ID
     public static Person findPerson(Personnel array, String inputID){
+
         //Person targetPerson
         //Person targetPerson = new Person(); 
         int i; 
@@ -256,13 +282,16 @@ class Student extends Person{
         double total = 52 + (this.getCreditHours() * 236.45);
      
         super.printPersonInfo(); //Prints seperating line + Student's info.
+
+
       
-        if(this.getGPA()>=3.85)//calculate discount if applicable 
-        {
-            discount = total * 0.25;
-        }
-        //print for remaining invoice information
-        System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
+      if(this.getGPA()>=3.85)//calculate discount if applicable 
+      {
+        discount=total*0.25;
+      }
+      //print for remaining invoice information
+      System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ 
+      " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
 
 
     }
