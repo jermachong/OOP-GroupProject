@@ -9,6 +9,13 @@
             "name": "Launch Project1",
             "request": "launch",
             "mainClass": "Project1",
+            "projectName": "OOP-GroupProject_7f31e31b"
+        },
+        {
+            "type": "java",
+            "name": "Launch Project1",
+            "request": "launch",
+            "mainClass": "Project1",
             "projectName": "OOP-GroupProject_70d594ba"
         },
         {

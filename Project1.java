@@ -91,7 +91,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             //Create Faculty with given info
             Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
             personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
-
+            
         }
         //Create Student
         else if(selection == 2){ // Get Student info
@@ -118,18 +118,21 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             personArr.addTo(personArr, s);
             System.out.println("Student added!");
         }
+
+        // Print tuition invoice for a student
         else if(selection == 3){
             System.out.println("    Enter the Student's ID: ");
             String inputID = myScan.nextLine();
             System.out.println("    Here is the Student's tuition invoice");
-            
-            //tuitionInvoice(inputID); //waiting on this to be built
+            Student.findPerson(personArr, inputID).print();
+
         }
         else if(selection == 4){
             System.out.println("    Enter the Faculty ID: ");
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
             System.out.println("    Here is the Faculty information");
+            Person.findPerson(personArr, inputID).print();
             // printInformation(inputID)
         }
         else if(selection == 5){
@@ -137,6 +140,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             // Get Name
             System.out.println("    Name of the staff member: ");
             String newName = myScan.nextLine();
+            newName = newName.toLowerCase();
             // make newName lowercase, create method to Capitalize first letter of first and last name to use when printing
             
             // Get ID
@@ -165,14 +169,16 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
             // assign info to new object, add to List[]
             // Staff s = new Staff(newName, newID, newDepartment, inputStatus);
         }
+        // Print Staff Information
         else if(selection == 6){
             System.out.println("    Enter the Staff ID: ");
             String inputID = myScan.nextLine();
             inputID = inputID.toLowerCase();
             System.out.println("    Here is the Staff information");
-            Person s = new Person();
-            s.findPerson(personArr, inputID).print();            
-            // printInformation(inputID)
+            
+            // Print Info,
+            Person.findPerson(personArr, inputID).print();
+
         }
         else if(selection == 7){
 
@@ -183,7 +189,6 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
     
 }
  
-
 abstract class Person{
     private String fullName; 
     private String id;
@@ -223,7 +228,8 @@ abstract class Person{
     public abstract void print();
 
     // Parse through the Person Array and find a target Person using an input ID
-    public Person findPerson(Personnel array, String inputID){
+    public static Person findPerson(Personnel array, String inputID){
+
         //Person targetPerson
         //Person targetPerson = new Person(); 
         int i; 
@@ -276,6 +282,7 @@ class Student extends Person{
         double total = 52 + (this.getCreditHours() * 236.45);
      
         super.printPersonInfo(); //Prints seperating line + Student's info.
+
 
       
       if(this.getGPA()>=3.85)//calculate discount if applicable 
