@@ -1,9 +1,12 @@
+
 /*
  * Project 1
  * Jeremy Achong, Jaime Chea, and Grace Maroon
  */
 
 import java.util.Scanner;
+import javax.swing.plaf.synth.SynthScrollBarUI;
+import java.lang.Math;
 
 import javax.swing.plaf.synth.SynthScrollBarUI;
 
@@ -13,9 +16,13 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 
         Personnel personArr = new Personnel();  //Array of people
 
-        int selection;
+        System.out.println("\t\t\t\t\t\tWelcome to my Personnel Management Program");
+
+        char selection;
         do{
-        System.out.println("Choose one of the options:");
+        //display statements
+        System.out.println("\n\nChoose one of the options:");
+
         System.out.println("1 - Enter the information a faculty");
         System.out.println("2 - Enter the information of a student");
         System.out.println("3 - Print tuition invoice for a student");
@@ -23,115 +30,206 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
         System.out.println("5 - Enter the information of a staff member");
         System.out.println("6 - Print the information of a staff member");
         System.out.println("7 - Exit Program");
-        System.out.println("\n    Enter your selection: ");
-        selection = myScan.nextInt();
+        System.out.print("\n    Enter your selection: ");
+        selection = myScan.next().charAt(0);//scan in a single character
+        System.out.print("\n");
 
         //Create Faculty
-        if(selection == 1){
+        if(selection == '1'){//entering faculty info
 
-            String newName, newID, newDepartment, newRank;
-            System.out.println("Enter the faculty info:");
+            String newName, newID, newDepartment, newRank;//declare all local variables
+            
+            System.out.println("Enter the faculty info:");//display message
             
             //Get Name
             do{
-                System.out.println("    Name of the faculty member: ");
-                newName = myScan.next();
-                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                System.out.print("\tName of the faculty member: ");
+                
+                newName = myScan.nextLine();//scan in line input
+                if (newName.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+      	        newName= myScan.nextLine();
+            	}
+                
+                if(newName.equals(null) || newName.length() == 1) //check to make sure name is not blank or too short
                 {
-                    System.out.println("Please enter a name");
+                    System.out.println("\tPlease enter a name");
                     continue; 
                 }
-                else break;
+                
+                else 
+                	break;//if input it valid, break the do while
             }while(true);
             
             // Get ID
             do{
-                System.out.println("    ID: ");
-                newID = myScan.next();
+                System.out.print("\tID: ");//display statement
+                
+                newID = myScan.nextLine();//scan in line to newID
+                if (newID.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newID= myScan.nextLine();
+            	}
+                
                 newID = newID.toLowerCase(); // make string all lowercase
-                if(newID.length() > 6 || newID.equals(null))
+                
+                if(newID.equals(null))//check to make sure newID is not blank
                 {
-                    System.out.println(newID + " is invalid");
+                    System.out.println("\tID is invalid");
                     continue;
                 }
-                else break; 
+                
+                else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate of one already in the system
+                {
+                	System.out.println(newID+ " is already in the system.");
+                    continue;
+                }
+                else 
+                	break; //if id is valid, exit the do while
 
             }while(true); 
-
-            // Get Department
-            do{
-                System.out.println("    Department: ");
-                newDepartment = myScan.next();
-                newDepartment = newDepartment.toLowerCase(); 
-                //look for math, eng, and science
-                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
-                    System.out.println("CORRECT INPUT");//input was valid, testing
-                    break;
-                }
-                else{
-                    System.out.println(newDepartment + " is invalid"); 
-                    continue; 
-                }
-
-            }while(true);
             
-            // Get Rank
+         // Get Rank
             do{
-                System.out.println("    Rank: ");
-                newRank = myScan.next(); //if the input is not equal to the two cases, then it repeats the loop. 
-                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunct"))
-                    //input was valid, break out of the do while loop and move onto retrieving department.
+                System.out.print("\tRank: ");
+                newRank = myScan.nextLine(); //scan in line to newRank
+                
+                if (newRank.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newRank= myScan.nextLine();
+            	}
+
+              //checks to see if newRank is a valid input
+                if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunct")) {
+                    //input was valid, format rank, break out of the do while loop and move onto retrieving department.
+                	newRank= newRank.substring(0, 1).toUpperCase() + newRank.substring(1).toLowerCase();
                     break;
+                }
                 else{
-                    System.out.println(newRank + " is invalid"); 
+                	//newRank was not valid, continue the loop
+                    System.out.println("\t"+ newRank + " is invalid"); 
                     continue;
                 }
             }
             while(true);
-            
+
+            // Get Department
+            do{
+                System.out.print("\tDepartment: ");
+                newDepartment = myScan.nextLine();//scan in line to newDepartment
+                
+                if (newDepartment.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newDepartment= myScan.nextLine();
+            	}
+                
+                //check if the newDepartment is a valid option
+                if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
+                	//input was valid. format newDepartment and break the do while
+                	newDepartment= newDepartment.substring(0, 1).toUpperCase() + newDepartment.substring(1).toLowerCase();
+                	break;
+                }
+                else{
+                	//input was invalid, continue the loop
+                    System.out.println("\t"+newDepartment + " is invalid"); 
+
+                }
+
+            }while(true);
 
             //Create Faculty with given info
             Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
-            personArr.addTo(personArr, f); //takes the person array and faculty object as parameters
-            /*personArr.getList()[0].print();  // testing
-            if(personArr.getList()[1] != null){
-                personArr.getList()[1].print();  // testing                
-            }
-            // testing
-            String inputID;
-            inputID = myScan.next();
-            for(int i = 0; i < personArr.getList().length; i++){
-                if(personArr.getList()[i] == null){
-                    //targetPerson = array.getList()[i];
-                    //personArr.getList()[i].print();
-                    personArr.getList()[i-1].print();
-                    System.out.println("gg fuck my life " + i);
-                    break;
-                }
-            }
-            // testing*/
+            personArr.addTo(personArr, f); //add new faculty to personArr
+            System.out.println("Faculty Added!");//display statement
 
         }
         //Create Student
-        else if(selection == 2){ // Get Student info
+        else if(selection == '2'){ // Get Student info
+
             System.out.println("Enter the student info:");
+          //declare all local variables
+            String newName, newID;
+            double newGPA;
+            int newHours;
             // Get Name
-            System.out.println("    Name of the student: ");
-            String newName = myScan.next();
-            
+
+            do{
+                System.out.print("\tName of the Student: ");
+                
+                newName = myScan.nextLine();//scan in line input
+                if (newName.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+      	        newName= myScan.nextLine();
+            	}
+                
+                if(newName.equals(null) || newName.length() == 1) //check to make sure name is not blank or too short
+                {
+                    System.out.println("\tPlease enter a name");
+                    continue; 
+                }
+                
+                else 
+                	break;//if input it valid, break the do while
+            }while(true);
+
             // Get ID
-            System.out.println("    ID: ");
-            String newID = myScan.next();
+            do{
+                System.out.print("\tID: ");
+                newID = myScan.nextLine();//scan in line as newID
+                
+                if (newID.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newID= myScan.nextLine();
+            	}
+                newID = newID.toLowerCase(); // make string all lowercase
+                
+                if(newID.equals(null))//check to make sure that id is not blank
+                {
+                    System.out.println("\tID is invalid");
+                    continue;
+                }
+                else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate to an ID already in personArr
+                {
+                	System.out.println("\t"+newID+ " is already in the system.");
+                    continue;
+                }
+                else 
+                	break; //if input is valid, break the do while
+
+            }while(true);
+            
+            
             
             // Get GPA
-            System.out.println("    GPA: ");
-            double newGPA = myScan.nextDouble();
+            do {
+            System.out.print("\tGPA: ");
+             newGPA = myScan.nextDouble();//scan in double to newGPA
+             
+            if(newGPA>4.0||newGPA<0.0) {//make sure newGPA isnt less than 0 or more than 4.0
+            	System.out.println("\tGPA input invalid. Please try again.");
+            	continue;
+            }
+            else
+            	break;//if input is valid, break the do while
+            
+            }while(true);
+
             
             // Get Credit Hours
-            System.out.println("    Credit Hours: ");
-            int newHours = myScan.nextInt();
+            do {
+            System.out.print("\tCredit Hours: ");
+            newHours = myScan.nextInt();//scan in int to newHours
+            
+            if(newHours<0) {//check to make sure newHours is not less than 0
+            	System.out.println("\tCredit Hours input invalid. Please try again.");
+            	continue;
+            }
+            else//if input is valid, break the do while
+            	break;
+            }while(true);
 
-            // Create Student 's', add info. to 's', add to List[], 
+            // Create Student 's', add info. 
+
             Student s = new Student(newName, newID, newGPA, newHours);
             // add s to List[]
             personArr.addTo(personArr, s);
@@ -139,67 +237,134 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
         }
 
         // Print tuition invoice for a student
-        else if(selection == 3){
-            System.out.println("    Enter the Student's ID: ");
-            String inputID = myScan.next();
-            System.out.println("    Here is the Student's tuition invoice");
-            Student.findPerson(personArr, inputID).print();
+        else if(selection == '3'){
+            System.out.print("\tEnter the Student's ID: ");
+            String inputID = myScan.nextLine();//take in line to inputID
+            
+            if (inputID.equals(""))//check to make sure nextLine did not take an empty space
+  	      	{
+            	inputID= myScan.nextLine();
+        	}
+            
+            inputID = inputID.toLowerCase();//make inputID lowercase
+            
+            if(Student.findPerson(personArr, inputID)!=null)//if the id entered is found in the personArr list
+            {
+            	if(Student.findPerson(personArr, inputID) instanceof Student) {//makes sure person found is a student
+            		System.out.println("\tHere is the tuition invoice for "+ Student.findPerson(personArr, inputID).getFullName());
+            		Student.findPerson(personArr, inputID).print();
+            	}
+            	else
+            		System.out.println(inputID+ " is not a student! Please select a different option.");//if input is not a student, do not print
+            }
+            else
+            {
+            	System.out.println("Student not found!");//display if person is not found
+            }
 
         }
-        else if(selection == 4){
+        //print faculty info
+        else if(selection == '4'){
             // Enter Info
-            System.out.println("    Enter the Faculty ID: ");
-            String inputID = myScan.next();
-            inputID = inputID.toLowerCase();
+            System.out.print("\tEnter the Faculty ID: ");
+            String inputID = myScan.nextLine();//take in line to inputID
+            
+            if (inputID.equals(""))//check to make sure nextLine did not take an empty space
+  	      	{
+            	inputID= myScan.nextLine();
+        	}
+            
+            inputID = inputID.toLowerCase();//make inputID lowercase
 
-            // Print Info
-            System.out.println("    Here is the Faculty information");
-            Person.findPerson(personArr, inputID).print();
+
+            if(Person.findPerson(personArr, inputID) != null)//check if the id entered is found in the personArr list
+            {
+            	if(Person.findPerson(personArr, inputID) instanceof Faculty)//check if person found is Faculty
+            	{
+            	System.out.print("\n");
+                Person.findPerson(personArr, inputID).print();//if person is in list and faculty, print infor
+            	}
+            	else
+            		System.out.println(inputID+ " is not a member of Faculty! Please select a different option.");//display statement if not faculty
+            }
+            else {
+            	System.out.println("No Faculty member matched!");//display statement if id not found in personArr
+            }
+
         }
 
-        // Get Staff info, add Person to personArr
-        else if(selection == 5){
-            String newName, newID, newDepartment, newStatus;
+        // Add staff member to personArr
+        else if(selection == '5'){
+            String newName, newID, newDepartment, newStatus;//declare local variables
+
             System.out.println("Enter the staff info:");
 
             //Get Name
             do{
-                System.out.println("    Name of the faculty member: ");
-                newName = myScan.next();
-                if(newName.equals(null) || newName.length() == 1) //need a proper name
+                System.out.print("\tName of the faculty member: ");
+                newName = myScan.nextLine();//scan in line as newName
+                
+                if (newName.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newName= myScan.nextLine();
+            	}
+                
+                if(newName.equals(null) || newName.length() == 1) //makes sure name isnt null and is a proper length
                 {
-                    System.out.println("Please enter a name");
+                    System.out.println("\tPlease enter a name");//display if name is not valid
                     continue; 
                 }
-                else break;
+                else 
+                	break;//if name is valid, exit do while
+
             }while(true);
             
             // Get ID
             do{
-                System.out.println("    ID: ");
-                newID = myScan.next();
+                System.out.print("\tID: ");
+                newID = myScan.nextLine();
+                if (newID.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newID= myScan.nextLine();
+            	}
                 newID = newID.toLowerCase(); // make string all lowercase
-                if(newID.length() > 6 || newID.equals(null))
+                
+                if(newID.equals(null)||newID.equals(""))//check to make sure newID is not null or blank
                 {
-                    System.out.println(newID + " is invalid");
+                    System.out.println("\tID is invalid");//display if id is null
                     continue;
                 }
-                else break; 
+                
+                else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not already in the personArr
+                {
+                	System.out.println("\n"+newID+ " is already in the system.");//display if id is a duplicate
+                    continue;
+                }
+                else
+                	break; //if newID is valid, exit the do while
+
 
             }while(true);
             
             // Get Department
             do{
-                System.out.println("    Department: ");
-                newDepartment = myScan.next();
-                newDepartment = newDepartment.toLowerCase(); 
-                //look for math, eng, and science
+                System.out.print("\tDepartment: ");
+                newDepartment = myScan.nextLine();//scan in new line to newDepartment
+                
+                if (newDepartment.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newDepartment= myScan.nextLine();
+            	}
+                
+                //look for math, engineering, and science
                 if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
-                    System.out.println("CORRECT INPUT");//input was valid, testing
+                	//if newDepartment is a valid subject, format newDepartment and exit the do while
+                	newDepartment= newDepartment.substring(0, 1).toUpperCase() + newDepartment.substring(1).toLowerCase();
                     break;
                 }
                 else{
-                    System.out.println(newDepartment + " is invalid"); 
+                    System.out.println("\t"+newDepartment + " is invalid"); //display if newDepartnent is not valid
+
                     continue; 
                 }
 
@@ -207,125 +372,177 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 
             // Get Status
             do{
-                System.out.println("Status, Enter P for Part Time, or Enter F for Full Time: ");
-                newStatus = myScan.next();
-                newStatus = newStatus.toLowerCase();
-                if(newStatus.equals("f") || newStatus.equals("p")){
-                    break;
+                System.out.print("\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
+                newStatus = myScan.nextLine();//scan in line to newStatus
+                
+                if (newStatus.equals(""))//check to make sure nextLine did not take an empty space
+      	      	{
+                	newStatus= myScan.nextLine();
+            	}
+                
+                if(newStatus.equalsIgnoreCase("f") || newStatus.equalsIgnoreCase("p")){//check if newStatus is one of the 2 valid options
+                	if (newStatus.equalsIgnoreCase("f"))//assign Full Time if newStatus is "f"
+                		newStatus= "Full Time";
+                	else if (newStatus.equalsIgnoreCase("p"))//assign Part Time if newStatus is "p"
+                		newStatus="Part Time";
+                    break;//exit for loop
                 }
                 else{
-                    System.out.println(newStatus + "is invalid, enter a valid Status");
+                    System.out.println(newStatus + "is invalid, enter a valid Status");//display statement if newStatus is not 'p' or 'f'
                     continue;
                 }
             }while(true);
-
-            // assign info to new object, add to personArr
-            Staff s = new Staff(newName, newID, newDepartment, newStatus);
-            personArr.addTo(personArr, s);
+            
+            Staff s = new Staff(newName, newID, newDepartment, newStatus);// assign info to new object
+            personArr.addTo(personArr, s);// add to personArr
+            System.out.println("Staff member added!");
         }
 
         // Print Staff Information
-        else if(selection == 6){
-            System.out.println("    Enter the Staff ID: ");
-            String inputID = myScan.next();
-            inputID = inputID.toLowerCase();
+        else if(selection == '6'){
+            System.out.print("\tEnter the Staff ID: ");
+            String inputID = myScan.nextLine();
+            do {
+            if (inputID.equals(""))//check to make sure nextLine did not take an empty space
+  	      	{
+            	inputID= myScan.nextLine();
+        	}
+            inputID = inputID.toLowerCase(); // make string all lowercase
+            
+            if(inputID.equals(null)||inputID.equals(""))//check to make sure inputID is not null or blank
+            {
+                System.out.println("\tID is invalid");//display if id is null
+                continue;
+            }
+            else
+            	break; //if inputID is valid, exit the do while
 
-            // Print Info
-            System.out.println("    Here is the Staff information");
-            Person.findPerson(personArr, inputID).print();
+        }while(true);
+        
+
+           if(Person.findPerson(personArr, inputID)!=null)//check if the ID belongs to a person in personArr
+            {
+            	if(Person.findPerson(personArr, inputID) instanceof Staff)//checks if the person found is a member of Staff
+            	{
+            		// Print Info if person is found and is a member of Staff
+            		System.out.print("\n");
+            		Person.findPerson(personArr, inputID).print();
+            	}
+            	else
+            		System.out.println(inputID+" is not a member of Staff! Please select a different option.");//display if found Person is not Staff
+
+            }
+            else
+            	System.out.println("No Staff member matched!");//display if no matching id is found
         }
 
-        else if(selection == 7){
-            break;
+        else if(selection == '7'){
+            break;//exit do while
         }
+        else
+        	System.out.println("Invalid entry- please try again ");//display statement if input is invalid
     }while(selection != 7);
 
         myScan.close(); //close scanner pointer
+        System.out.println("\n\n\n\nGoodbye!");//display at end of main run
     }
     
 }
  
 abstract class Person{
+	//declare private variables
     private String fullName; 
     private String id;
 
     //Setters
     public void setFullName(String fullName){
-        this.fullName = fullName; 
+        this.fullName = fullName; //set Person's fullName to new fullName
     }
     public void setID(String id){
-        this.id = id; 
+        this.id = id; //set Person's id to new id
     }
 
     //Getters
     public String getFullName(){
-        return fullName; 
+        return fullName; //return Person's fullName
     }
     public String getID(){
-        return id; 
+        return id; //return Person's id
     }
 
     //Constructor
-    public Person(){
+    public Person(){//default constructor for person
+    	//set variables to default values
         fullName = "None"; 
         id = "00"; 
     }
-    public Person(String fullName, String id){
+    public Person(String fullName, String id){//default constructor for person
+    	//set variables to given values
         this.fullName = fullName;  
         this.id = id; 
     }
 
     //toString
+    
+    @Override
     public String toString(){
-        return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; 
+        return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; //return formatted string
     }
     
-    //Abstract function to be overriden in Student, Fac, and Staff
+    //Abstract function to be overridden in Student, Faculty, and Staff
     public abstract void print();
 
     // Parse through the Person Array and find a target Person using an input ID
     public static Person findPerson(Personnel array, String inputID){
         //Person targetPerson
         //Person targetPerson = new Person(); 
-        int i; 
-        for(i = 0; i < array.getList().length; i++){
-            // System.out.println("i = " + i); // testing
+        int i=0; 
+        while(array.getList()[i]!=null) {//loop through valid members of the list
             if(array.getList()[i].getID().equals(inputID)){
-                //targetPerson = array.getList()[i];
-                break;
+            	return array.getList()[i];//if the matched Id is found, return the matching Person
             }
+            i++;//increment i
         }
-        return array.getList()[i];
+        return null;//return null if matching person is not found
     }
 
     //Print out full name and ID, useful for all print()
     public void printPersonInfo(){
-        System.out.println(fullName + "\t\t" + id); 
+        System.out.println("\t---------------------------\n\t"+fullName + "\t\t" + id); 
     } 
 }
 
 class Student extends Person{ 
+	//declare private variables
     private double gpa; 
     private int creditHours; 
 
     //Setters
     public void setGPA(double gpa){
-        this.gpa = gpa; 
+        this.gpa = gpa; //set Student's gpa to new gpa
     }
     public void setCreditHours(int creditHours){
-        this.creditHours = creditHours; 
+        this.creditHours = creditHours; //set Student's creditHours to new creditHours
     }
 
     //Getters
     public double getGPA(){
-        return gpa; 
+        return gpa; //return Student's gpa
     }
     public int getCreditHours(){
-        return creditHours; 
+        return creditHours; //return Student's creditHours
     }
 
-    //Constructor
+    //Constructors
+    public Student()//default constructor
+    {
+    	//assigns blank values to all variables
+    	super("", "");
+        this.gpa = 0.0; 
+        this.creditHours = 0; 
+    }
     public Student(String fullName, String id, double gpa, int creditHours){
+    	//assigns given values to all variables
         super(fullName, id);
         this.gpa = gpa; 
         this.creditHours = creditHours; 
@@ -336,6 +553,11 @@ class Student extends Person{
         //declare local variables to store the payment total and discount
         double discount = 0.0;
         double total = 52 + (this.getCreditHours() * 236.45);
+        
+        total= total*100;//round to 2 decimal places
+        total= Math.round(total);
+        total= total/100;
+
      
         super.printPersonInfo(); //Prints seperating line + Student's info.
 
@@ -344,12 +566,21 @@ class Student extends Person{
       if(this.getGPA()>=3.85)//calculate discount if applicable 
       {
         discount=total*0.25;
+        discount= discount*100;//round to 2 decimal places
+        discount= Math.round(discount);
+        discount= discount/100;
+        
+        total= total-discount;
+        total= total*100;//round to 2 decimal places
+        total= Math.round(total);
+        total= total/100;
+     
+        
+     
       }
       //print for remaining invoice information
-      System.out.println("---------------------------\nCredit Hours: "+ this.getCreditHours()+ 
-      " ($236.45/credit hour)\nFees: $52\n\nTotal payment: "+ (total-discount)+"\t\t ($"+discount+" discount applied)\n---------------------------");
-
-
+      System.out.println("\tCredit Hours: "+ this.getCreditHours()+ 
+      " ($236.45/credit hour)\n\tFees: $52\n\n\tTotal payment: "+ total+"\t\t ($"+discount+" discount applied)\n---------------------------");
     }
 }
 
@@ -358,16 +589,23 @@ abstract class Employee extends Person{
 
     //Setters
     public void setDepartment(String department){
-        this.department = department; 
+        this.department = department; //set Employee's department to new department
     }
 
     //Getters
     public String getDepartment(){
-        return department; 
+        return department; //return Employee's department
     }
 
     //Constructors
+    public Employee()//default constructor
+    {
+    	//assign blank values to all variables
+    	super("","");
+    	this.department= "";
+    }
     public Employee(String fullName, String id, String department){
+    	//assign given values to all variables
         super(fullName,id);
         this.department = department; 
     }
@@ -379,25 +617,31 @@ class Faculty extends Employee{
 
     //Setters
     public void setRank(String rank){
-        this.rank = rank; 
+        this.rank = rank; //set Employee's rank to new rank
     }
 
     //Getters
     public String getRank(){
-        return rank;
+        return rank; //return Employee's rank 
     }
 
     //Constructors
+    public Faculty()
+    {
+    	//assign blank values to all variables
+    	super("","", "");
+    	this.rank="";
+    }
     public Faculty(String fullName, String id, String department, String rank){
+    	//assign given values to all variables
         super(fullName, id, department);
         this.rank = rank;
     }
 
     //print info for faculty (department + rank)
     public void print(){
-       System.out.println("---------------------------");//display statement
       super.printPersonInfo();
-       System.out.println(this.getDepartment()+", "+ this.getRank()+"\n---------------------------");//display statement
+       System.out.println("\t"+ this.getDepartment()+" Department, "+ this.getRank()+"\n\t---------------------------");//display statement
 
     }
 
@@ -408,33 +652,47 @@ class Staff extends Employee{
 
     //Setters
     public void setStatus(String status){
-        this.status = status; 
+        this.status = status; //set Staff status to new Status
     }
 
     //Getters 
     public String getStatus(){
-        return status; 
+        return status; //return Staff status 
     }
 
     //Constructors
+    public Staff()//default constructor
+    {
+    	//assign blank values to all variables
+        super("", "", "");
+        this.status = ""; 
+    }
     public Staff(String fullName, String id, String department, String status){
+    	//assign given values to all variables
         super(fullName, id, department);
         this.status = status; 
     }
 
     //print info for staff (department + status)
     public void print(){
-      System.out.println("---------------------------");//display statement
       super.printPersonInfo();
-      System.out.println(this.getDepartment()+", "+ this.getStatus()+"\n---------------------------");//display statement
+      System.out.println("\t"+this.getDepartment()+" Department, "+ this.getStatus()+"\n\t---------------------------");//display statement
     }
 }
 
 //Creates array of Person
 class Personnel{
-    private Person[] list; 
+    private Person[] list; //declare private variable
+    
+    //constructors
     public Personnel() {
+    	//define Personnel's list
         list = new Person[100]; 
+    }
+    public Personnel(int listSize)
+    {
+    	//define Personnel's list with custom size
+        list = new Person[listSize]; 
     }
 
     //retrieve array of Persons
@@ -444,16 +702,21 @@ class Personnel{
 
     //find next empty spot in array and add person object to array.
     public void addTo(Personnel list, Person p){
-        for(int i = 0; i < list.getList().length; i++)
+    	int i;
+        for(i = 0; i < list.getList().length; i++)
         {
-            if(list.getList()[i] == null)
+            if(list.getList()[i] == null)//find first available space in list
+
             {
                 list.getList()[i] = p;
                 break; 
             }
         }
+
+        if(i>list.getList().length)
+        	System.out.println("List is full!");//display if no spot is found for person p
+
     }
     
 }
-
 
