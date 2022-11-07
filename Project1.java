@@ -8,18 +8,21 @@ import java.util.Scanner;
 import javax.swing.plaf.synth.SynthScrollBarUI;
 import java.lang.Math;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
  public class Project1 {
     public static void main(String[] args){
         Scanner myScan = new Scanner(System.in);
 
         Personnel personArr = new Personnel();  //Array of people
-        
+
         System.out.println("\t\t\t\t\t\tWelcome to my Personnel Management Program");
 
         char selection;
         do{
         //display statements
         System.out.println("\n\nChoose one of the options:");
+
         System.out.println("1 - Enter the information a faculty");
         System.out.println("2 - Enter the information of a student");
         System.out.println("3 - Print tuition invoice for a student");
@@ -129,30 +132,27 @@ import java.lang.Math;
                 else{
                 	//input was invalid, continue the loop
                     System.out.println("\t"+newDepartment + " is invalid"); 
-                    continue; 
+
                 }
 
             }while(true);
-            
-            
-            
-            
 
             //Create Faculty with given info
             Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
             personArr.addTo(personArr, f); //add new faculty to personArr
             System.out.println("Faculty Added!");//display statement
 
-
         }
         //Create Student
         else if(selection == '2'){ // Get Student info
+
             System.out.println("Enter the student info:");
           //declare all local variables
             String newName, newID;
             double newGPA;
             int newHours;
             // Get Name
+
             do{
                 System.out.print("\tName of the Student: ");
                 
@@ -213,6 +213,7 @@ import java.lang.Math;
             	break;//if input is valid, break the do while
             
             }while(true);
+
             
             // Get Credit Hours
             do {
@@ -228,6 +229,7 @@ import java.lang.Math;
             }while(true);
 
             // Create Student 's', add info. 
+
             Student s = new Student(newName, newID, newGPA, newHours);
             // add s to List[]
             personArr.addTo(personArr, s);
@@ -294,6 +296,7 @@ import java.lang.Math;
         // Add staff member to personArr
         else if(selection == '5'){
             String newName, newID, newDepartment, newStatus;//declare local variables
+
             System.out.println("Enter the staff info:");
 
             //Get Name
@@ -313,6 +316,7 @@ import java.lang.Math;
                 }
                 else 
                 	break;//if name is valid, exit do while
+
             }while(true);
             
             // Get ID
@@ -339,6 +343,7 @@ import java.lang.Math;
                 else
                 	break; //if newID is valid, exit the do while
 
+
             }while(true);
             
             // Get Department
@@ -359,6 +364,7 @@ import java.lang.Math;
                 }
                 else{
                     System.out.println("\t"+newDepartment + " is invalid"); //display if newDepartnent is not valid
+
                     continue; 
                 }
 
@@ -386,7 +392,6 @@ import java.lang.Math;
                     continue;
                 }
             }while(true);
-
             
             Staff s = new Staff(newName, newID, newDepartment, newStatus);// assign info to new object
             personArr.addTo(personArr, s);// add to personArr
@@ -552,6 +557,7 @@ class Student extends Person{
         total= total*100;//round to 2 decimal places
         total= Math.round(total);
         total= total/100;
+
      
         super.printPersonInfo(); //Prints seperating line + Student's info.
 
@@ -575,8 +581,6 @@ class Student extends Person{
       //print for remaining invoice information
       System.out.println("\tCredit Hours: "+ this.getCreditHours()+ 
       " ($236.45/credit hour)\n\tFees: $52\n\n\tTotal payment: "+ total+"\t\t ($"+discount+" discount applied)\n---------------------------");
-
-
     }
 }
 
@@ -702,14 +706,17 @@ class Personnel{
         for(i = 0; i < list.getList().length; i++)
         {
             if(list.getList()[i] == null)//find first available space in list
+
             {
                 list.getList()[i] = p;
                 break; 
             }
         }
+
         if(i>list.getList().length)
         	System.out.println("List is full!");//display if no spot is found for person p
 
     }
     
 }
+
