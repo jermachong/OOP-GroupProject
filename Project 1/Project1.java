@@ -5,10 +5,7 @@
  */
 
 import java.util.Scanner;
-import javax.swing.plaf.synth.SynthScrollBarUI;
 import java.lang.Math;
-
-import javax.swing.plaf.synth.SynthScrollBarUI;
 
  public class Project1 {
     public static void main(String[] args){
