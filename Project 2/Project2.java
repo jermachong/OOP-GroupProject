@@ -4,8 +4,8 @@
  * Jeremy Achong, Jaime Chea, and Grace Maroon
  */
 
-import java.util.Scanner;
 import java.lang.Math;
+import java.util.*; 
 
  public class Project2 {
     public static void main(String[] args){
@@ -717,3 +717,15 @@ class Personnel{
     
 }
 
+class SortByCreditHour implements Comparator<Student>
+{
+    public int compare(Student a, Student b)
+    {
+        if(a.getCreditHours() == b.getCreditHours())
+            return 0;
+        else if(a.getCreditHours() > b.getCreditHours())
+            return 1; 
+        else
+            return -1; 
+    }
+}
