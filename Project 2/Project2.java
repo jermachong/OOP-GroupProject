@@ -4,8 +4,9 @@
  * Jeremy Achong, Jaime Chea, and Grace Maroon
  */
 
-import java.util.Scanner;
 import java.lang.Math;
+import java.util.*; 
+import java.io.*; 
 
  public class Project2 {
     public static void main(String[] args){
@@ -434,6 +435,22 @@ import java.lang.Math;
         }
 
         else if(selection == '7'){
+            PrintWriter writer = null; 
+            System.out.println("Would you like to create a report?");
+            String report = myScan.nextLine();
+            if(report.equalsIgnoreCase("Yes"))
+            {
+                try{
+                    writer = new PrintWriter("report.txt"); 
+                }catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+
+                writer.print(""); //ARRAYLIST OF STUDENTS GOES HERE.  
+
+            }
+
+            writer.close(); //close writer pointer
             break;//exit do while
         }
         else
@@ -717,3 +734,15 @@ class Personnel{
     
 }
 
+class SortByCreditHour implements Comparator<Student>
+{
+    public int compare(Student a, Student b)
+    {
+        if(a.getCreditHours() == b.getCreditHours())
+            return 0;
+        else if(a.getCreditHours() > b.getCreditHours())
+            return 1; 
+        else
+            return -1; 
+    }
+}
