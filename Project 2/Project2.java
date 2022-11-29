@@ -448,6 +448,7 @@ import java.io.*;
 
                 Collections.sort(sList, new SortByCreditHour()); //sort students by credit hours
 
+                //make sure report.txt is built
                 try{
                     writer = new PrintWriter("report.txt"); 
                 }catch (FileNotFoundException e){
