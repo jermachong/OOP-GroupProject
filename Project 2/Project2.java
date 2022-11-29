@@ -14,6 +14,9 @@ import java.io.*;
 
         Personnel personArr = new Personnel();  //Array of people
 
+        ArrayList<Student> sList = new ArrayList<>(); //ArrayList of students used for selection 7
+
+
         System.out.println("\t\t\t\t\t\tWelcome to my Personnel Management Program");
 
         char selection;
@@ -228,9 +231,11 @@ import java.io.*;
 
             // Create Student 's', add info. 
 
-            Student s = new Student(newName, newID, newGPA, newHours);
-            // add s to List[]
-            personArr.addTo(personArr, s);
+            Student s = new Student(newName, newID, newGPA, newHours); //create student obj with given information
+        
+            personArr.addTo(personArr, s); //add to personnel 
+            sList.add(s); //add to student arraylist 'sList'
+
             System.out.println("Student added!");
         }
 
@@ -435,23 +440,32 @@ import java.io.*;
         }
 
         else if(selection == '7'){
-            PrintWriter writer = null; 
             System.out.println("Would you like to create a report?");
             String report = myScan.nextLine();
             if(report.equalsIgnoreCase("Yes"))
             {
+                PrintWriter writer = null; //create printwriter pointer
+
+                Collections.sort(sList, new SortByCreditHour()); //sort students by credit hours
+
                 try{
                     writer = new PrintWriter("report.txt"); 
                 }catch (FileNotFoundException e){
                     e.printStackTrace();
                 }
 
-                writer.print(""); //ARRAYLIST OF STUDENTS GOES HERE.  
+                writer.println("Students sorted by Credit Hour\n"); //header
+                
+                for(Student s: sList) //loop prints out all students
+                    writer.print(s); 
+
+                writer.close(); //close writer pointer
+
 
             }
-
-            writer.close(); //close writer pointer
-            break;//exit do while
+            else if(report.equalsIgnoreCase("no")){
+                break;//exit do while
+            }
         }
         else
         	System.out.println("Invalid entry- please try again ");//display statement if input is invalid
