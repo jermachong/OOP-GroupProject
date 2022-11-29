@@ -748,6 +748,7 @@ class Personnel{
     
 }
 
+//Sorts array list of students by credit hour
 class SortByCreditHour implements Comparator<Student>
 {
     public int compare(Student a, Student b)
