@@ -39,7 +39,7 @@ import java.io.*;
             if(selection == '1'){//entering faculty info
 
                 String newName, newID, newDepartment, newRank;//declare all local variables
-                
+                Faculty f = new Faculty();; 
                 System.out.println("Enter the faculty info:");//display message
                 
                 //Get Name
@@ -57,36 +57,46 @@ import java.io.*;
                         System.out.println("\tPlease enter a name");
                         continue; 
                     }
-                    
-                    else 
+                    else{
+                        f.setFullName(newName);
                         break;//if input it valid, break the do while
+                    }
                 }while(true);
                 
                 // Get ID
                 do{
                     System.out.print("\tID: ");//display statement
                     
-                    newID = myScan.nextLine();//scan in line to newID
-                    if (newID.equals(""))//check to make sure nextLine did not take an empty space
-                    {
-                        newID= myScan.nextLine();
-                    }
+                    // newID = myScan.nextLine();//scan in line to newID
+                    // if (newID.equals(""))//check to make sure nextLine did not take an empty space
+                    // {
+                    //     newID= myScan.nextLine();
+                    // }
                     
-                    newID = newID.toLowerCase(); // make string all lowercase
+                    // newID = newID.toLowerCase(); // make string all lowercase
+
+                    // if(newID.equals(null))//check to make sure newID is not blank
+                    // {
+                    //     System.out.println("\tID is invalid");
+                    //     continue;
+                    // }
                     
-                    if(newID.equals(null))//check to make sure newID is not blank
-                    {
-                        System.out.println("\tID is invalid");
-                        continue;
+                    // else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate of one already in the system
+                    // {
+                    //     System.out.println(newID+ " is already in the system.");
+                    //     continue;
+                    // }
+                    // else 
+                    //     break; //if id is valid, exit the do while
+
+                    try {
+                        newID = myScan.nextLine();//scan in line to newID
+                        f.setID(newID);
+                        f.validateId(); 
+                        break;
+                    } catch (idException e) {
+                        System.out.println(e); 
                     }
-                    
-                    else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate of one already in the system
-                    {
-                        System.out.println(newID+ " is already in the system.");
-                        continue;
-                    }
-                    else 
-                        break; //if id is valid, exit the do while
 
                 }while(true); 
                 
@@ -104,6 +114,7 @@ import java.io.*;
                     if(newRank.equalsIgnoreCase("professor") || newRank.equalsIgnoreCase("adjunct")) {
                         //input was valid, format rank, break out of the do while loop and move onto retrieving department.
                         newRank= newRank.substring(0, 1).toUpperCase() + newRank.substring(1).toLowerCase();
+                        f.setRank(newRank);
                         break;
                     }
                     else{
@@ -128,6 +139,7 @@ import java.io.*;
                     if(newDepartment.equalsIgnoreCase("mathematics") || newDepartment.equalsIgnoreCase("sciences") || newDepartment.equalsIgnoreCase("engineering") ){
                         //input was valid. format newDepartment and break the do while
                         newDepartment= newDepartment.substring(0, 1).toUpperCase() + newDepartment.substring(1).toLowerCase();
+                        f.setDepartment(newDepartment);
                         break;
                     }
                     else{
@@ -139,7 +151,7 @@ import java.io.*;
                 }while(true);
 
                 //Create Faculty with given info
-                Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
+                // Faculty f = new Faculty(newName, newID, newDepartment, newRank); 
                 personArr.addTo(personArr, f); //add new faculty to personArr
                 System.out.println("Faculty Added!");//display statement
 
@@ -441,8 +453,13 @@ import java.io.*;
 
             else if(selection == '7'){
                 System.out.println("Would you like to create a report?");
-                myScan.nextLine();
+
                 String report = myScan.nextLine();
+                if (report.equals(""))//check to make sure nextLine did not take an empty space
+                    {
+                        report= myScan.nextLine();
+                    }
+
                 if(report.equalsIgnoreCase("Yes"))
                 {
                     PrintWriter writer = null; //create printwriter pointer
@@ -482,6 +499,7 @@ import java.io.*;
                     } 
 
                     writer.close(); //close writer pointer
+                    break;
 
 
                 }
@@ -538,8 +556,9 @@ abstract class Person{
     public String toString(){
         return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; //return formatted string
     }
-
-public void validateId() throws idException//ensures id is properly formatted
+    
+//ensures id is properly formatted
+public void validateId() throws idException 
     {
       //checks to make sure id is proper length
        if(this.id.length()>6){  
