@@ -538,6 +538,27 @@ abstract class Person{
     public String toString(){
         return "[" + "Full Name: " + fullName + "\n" + "ID: " + id; //return formatted string
     }
+
+public void validateId() throws idException//ensures id is properly formatted
+    {
+      //checks to make sure id is proper length
+       if(this.id.length()>6){  
+   
+        throw new idException("ID is too long");    
+      }  
+      if(this.id.length()<6)
+      {
+        throw new idException("ID is too short"); 
+      }
+      for(int i=0; i<6; i++)
+        {
+          if(i<2&&id.charAt(i)<97||id.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+            
+          else if(i>=2&&id.charAt(i)<48||id.charAt(i)>57)//checks to make sure remaining characters are digits
+            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+        }
+    }
     
     //Abstract function to be overridden in Student, Faculty, and Staff
     public abstract String print();
@@ -789,9 +810,9 @@ class SortByCreditHour implements Comparator<Student>
             return -1; 
     }
 }
-
-class IdException extends Exception{
-    public IdException(String id){
-        super(id);
-    }    
+class idException extends Exception { 
+    public idException(String errorMessage) {
+        super(errorMessage);
+    }
 }
+
