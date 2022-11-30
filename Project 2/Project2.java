@@ -255,7 +255,7 @@ import java.io.*;
             {
             	if(Student.findPerson(personArr, inputID) instanceof Student) {//makes sure person found is a student
             		System.out.println("\tHere is the tuition invoice for "+ Student.findPerson(personArr, inputID).getFullName());
-            		Student.findPerson(personArr, inputID).print();
+            		System.out.println(Student.findPerson(personArr, inputID).print()); 
             	}
             	else
             		System.out.println(inputID+ " is not a student! Please select a different option.");//if input is not a student, do not print
@@ -285,7 +285,7 @@ import java.io.*;
             	if(Person.findPerson(personArr, inputID) instanceof Faculty)//check if person found is Faculty
             	{
             	System.out.print("\n");
-                Person.findPerson(personArr, inputID).print();//if person is in list and faculty, print infor
+                System.out.println(Person.findPerson(personArr, inputID).print());//if person is in list and faculty, print infor
             	}
             	else
             		System.out.println(inputID+ " is not a member of Faculty! Please select a different option.");//display statement if not faculty
@@ -429,7 +429,7 @@ import java.io.*;
             	{
             		// Print Info if person is found and is a member of Staff
             		System.out.print("\n");
-            		Person.findPerson(personArr, inputID).print();
+            		System.out.println(Person.findPerson(personArr, inputID).print());
             	}
             	else
             		System.out.println(inputID+" is not a member of Staff! Please select a different option.");//display if found Person is not Staff
@@ -455,10 +455,30 @@ import java.io.*;
                     e.printStackTrace();
                 }
 
-                writer.println("Students sorted by Credit Hour\n"); //header
+                // write faculty and staff to .txt
+                writer.println("Faculty Members \n ------------- \n");
+                for(Person p:personArr.getList()){
+                    if(p instanceof Faculty == true){
+                        String toPrint = p.print();
+                        writer.print(toPrint + "\n\n");
+                    }
+                }
                 
-                for(Student s: sList) //loop prints out all students
-                    writer.print(s); 
+                writer.println("Staff Members \n ------------- \n");
+                for(Person p:personArr.getList()){
+                    if(p instanceof Student == true){
+                        String toPrint = p.print();
+                        writer.print(toPrint + "\n\n");
+                    }
+                }
+
+                writer.println("Students sorted by Credit Hour\n ------------- \n"); //header
+                
+                for(Student s: sList){
+                    //loop prints out all students
+                    String toPrint = s.print();
+                    writer.print(toPrint); 
+                } 
 
                 writer.close(); //close writer pointer
 
@@ -519,7 +539,7 @@ abstract class Person{
     }
     
     //Abstract function to be overridden in Student, Faculty, and Staff
-    public abstract void print();
+    public abstract String print();
 
     // Parse through the Person Array and find a target Person using an input ID
     public static Person findPerson(Personnel array, String inputID){
@@ -536,8 +556,10 @@ abstract class Person{
     }
 
     //Print out full name and ID, useful for all print()
-    public void printPersonInfo(){
-        System.out.println("\t---------------------------\n\t"+fullName + "\t\t" + id); 
+    public String printPersonInfo(){
+        String toString;
+        toString = "\t---------------------------\n\t"+fullName + "\t\t" + id;
+        return toString; 
     } 
 }
 
@@ -578,7 +600,9 @@ class Student extends Person{
     }
 
     //prints the student's tution invoice
-    public void print(){
+    public String print(){
+        // local variable to return string
+        String toPrint;
         //declare local variables to store the payment total and discount
         double discount = 0.0;
         double total = 52 + (this.getCreditHours() * 236.45);
@@ -588,7 +612,7 @@ class Student extends Person{
         total= total/100;
 
      
-        super.printPersonInfo(); //Prints seperating line + Student's info.
+        // super.printPersonInfo(); //Prints seperating line + Student's info.
 
 
       
@@ -608,8 +632,9 @@ class Student extends Person{
      
       }
       //print for remaining invoice information
-      System.out.println("\tCredit Hours: "+ this.getCreditHours()+ 
-      " ($236.45/credit hour)\n\tFees: $52\n\n\tTotal payment: "+ total+"\t\t ($"+discount+" discount applied)\n---------------------------");
+      toPrint = super.printPersonInfo() +  "\n\tCredit Hours: "+ this.getCreditHours()+ 
+      " ($236.45/credit hour)\n\tFees: $52\n\n\tTotal payment: "+ total+"\t\t ($"+discount+" discount applied)\n---------------------------";
+      return toPrint;
     }
 }
 
@@ -668,10 +693,10 @@ class Faculty extends Employee{
     }
 
     //print info for faculty (department + rank)
-    public void print(){
-      super.printPersonInfo();
-       System.out.println("\t"+ this.getDepartment()+" Department, "+ this.getRank()+"\n\t---------------------------");//display statement
-
+    public String print(){
+        String toPrint;
+        toPrint = super.printPersonInfo() + "\n\t"+ this.getDepartment()+" Department, "+ this.getRank()+"\n\t---------------------------";//display statement
+        return toPrint;
     }
 
 }
@@ -703,9 +728,10 @@ class Staff extends Employee{
     }
 
     //print info for staff (department + status)
-    public void print(){
-      super.printPersonInfo();
-      System.out.println("\t"+this.getDepartment()+" Department, "+ this.getStatus()+"\n\t---------------------------");//display statement
+    public String print(){
+        String toPrint;
+        toPrint = super.printPersonInfo() + "\n\t"+this.getDepartment()+" Department, "+ this.getStatus()+"\n\t---------------------------";//display statement
+        return toPrint;
     }
 }
 
@@ -761,4 +787,10 @@ class SortByCreditHour implements Comparator<Student>
         else
             return -1; 
     }
+}
+
+class IdException extends Exception{
+    public IdException(String id){
+        super(id);
+    }    
 }
