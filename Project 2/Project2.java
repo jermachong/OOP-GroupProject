@@ -93,14 +93,14 @@ import java.io.*;
                     {
                       for(int i=0; i<6; i++)
                         {
-                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                          if(i<2&&newID.charAt(i)<97||i<2&&newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
                               throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
             
-                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
-                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                          if(i>2&&newID.charAt(i)<48||i>2&&newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID isnot formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
                         }
+                        break;
                     }
-
                     else
                         break; //if newID is valid, exit the do while
                   }
@@ -224,14 +224,15 @@ import java.io.*;
                     }
                     else if(newID.length()==6)
                     {
-                      for(int i=0; i<6; i++)
+                        for(int i=0; i<6; i++)
                         {
-                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                          if(i<2&&newID.charAt(i)<97||i<2&&newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
                               throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
             
-                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
-                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                          if(i>2&&newID.charAt(i)<48||i>2&&newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID isnot formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
                         }
+                        break;
                     }
 
                     else
@@ -397,14 +398,15 @@ import java.io.*;
                     }
                     else if(newID.length()==6)
                     {
-                      for(int i=0; i<6; i++)
+                        for(int i=0; i<6; i++)
                         {
-                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                          if(i<2&&newID.charAt(i)<97||i<2&&newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
                               throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
             
-                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
-                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                          if(i>2&&newID.charAt(i)<48||i>2&&newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID isnot formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
                         }
+                        break;
                     }
 
                     else
