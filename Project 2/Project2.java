@@ -52,7 +52,7 @@ import java.io.*;
                     newName= myScan.nextLine();
                     }
                     
-                    if(newName.equals(null) || newName.length() == 1) //check to make sure name is not blank or too short
+                    if(newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) //check to make sure name is not blank or too short
                     {
                         System.out.println("\tPlease enter a name");
                         continue; 
@@ -188,7 +188,7 @@ import java.io.*;
                     newName= myScan.nextLine();
                     }
                     
-                    if(newName.equals(null) || newName.length() == 1) //check to make sure name is not blank or too short
+                    if(newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) //check to make sure name is not blank or too short
                     {
                         System.out.println("\tPlease enter a name");
                         continue; 
@@ -362,7 +362,7 @@ import java.io.*;
                         newName= myScan.nextLine();
                     }
                     
-                    if(newName.equals(null) || newName.length() == 1) //makes sure name isnt null and is a proper length
+                    if(newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) //makes sure name isnt null and is a proper length
                     {
                         System.out.println("\tPlease enter a name");//display if name is not valid
                         continue; 
