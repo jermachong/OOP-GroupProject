@@ -64,31 +64,53 @@ import java.io.*;
                 
                 // Get ID
                 do{
-                    System.out.print("\tID: ");//display statement
-                    
-                    newID = myScan.nextLine();//scan in line to newID
+                    System.out.print("\tID: ");
+                  try{
+                    newID = myScan.nextLine();
                     if (newID.equals(""))//check to make sure nextLine did not take an empty space
                     {
                         newID= myScan.nextLine();
                     }
-                    
                     newID = newID.toLowerCase(); // make string all lowercase
                     
-                    if(newID.equals(null))//check to make sure newID is not blank
+                    if(newID.equals(null)||newID.equals(""))//check to make sure newID is not null or blank
                     {
-                        System.out.println("\tID is invalid");
-                        continue;
+                        throw new idException("ID field is null");
                     }
-                    
-                    else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate of one already in the system
+                    else if(newID.length()>6)
+                    {  
+                        throw new idException("ID is too long");    
+                    }  
+                    else if(newID.length()<6)
                     {
-                        System.out.println(newID+ " is already in the system.");
-                        continue;
+                        throw new idException("ID is too short"); 
                     }
-                    else 
-                        break; //if id is valid, exit the do while
+                    else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not already in the personArr
+                    {
+                        throw new idException("ID already exists in Personel record");
+                    }
+                    else if(newID.length()==6)
+                    {
+                      for(int i=0; i<6; i++)
+                        {
+                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                              throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+            
+                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                        }
+                    }
 
-                }while(true); 
+                    else
+                        break; //if newID is valid, exit the do while
+                  }
+                  catch (idException e)
+                    {
+                      System.out.println(e);
+                    }
+
+
+                }while(true);
                 
             // Get Rank
                 do{
@@ -176,26 +198,50 @@ import java.io.*;
                 // Get ID
                 do{
                     System.out.print("\tID: ");
-                    newID = myScan.nextLine();//scan in line as newID
-                    
+                  try{
+                    newID = myScan.nextLine();
                     if (newID.equals(""))//check to make sure nextLine did not take an empty space
                     {
                         newID= myScan.nextLine();
                     }
                     newID = newID.toLowerCase(); // make string all lowercase
                     
-                    if(newID.equals(null))//check to make sure that id is not blank
+                    if(newID.equals(null)||newID.equals(""))//check to make sure newID is not null or blank
                     {
-                        System.out.println("\tID is invalid");
-                        continue;
+                        throw new idException("ID field is null");
                     }
-                    else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not a duplicate to an ID already in personArr
+                    else if(newID.length()>6)
+                    {  
+                        throw new idException("ID is too long");    
+                    }  
+                    else if(newID.length()<6)
                     {
-                        System.out.println("\t"+newID+ " is already in the system.");
-                        continue;
+                        throw new idException("ID is too short"); 
                     }
-                    else 
-                        break; //if input is valid, break the do while
+                    else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not already in the personArr
+                    {
+                        throw new idException("ID already exists in Personel record");
+                    }
+                    else if(newID.length()==6)
+                    {
+                      for(int i=0; i<6; i++)
+                        {
+                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                              throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+            
+                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                        }
+                    }
+
+                    else
+                        break; //if newID is valid, exit the do while
+                  }
+                  catch (idException e)
+                    {
+                      System.out.println(e);
+                    }
+
 
                 }while(true);
                 
@@ -325,6 +371,7 @@ import java.io.*;
                 // Get ID
                 do{
                     System.out.print("\tID: ");
+                  try{
                     newID = myScan.nextLine();
                     if (newID.equals(""))//check to make sure nextLine did not take an empty space
                     {
@@ -334,17 +381,39 @@ import java.io.*;
                     
                     if(newID.equals(null)||newID.equals(""))//check to make sure newID is not null or blank
                     {
-                        System.out.println("\tID is invalid");//display if id is null
-                        continue;
+                        throw new idException("ID field is null");
                     }
-                    
+                    else if(newID.length()>6)
+                    {  
+                        throw new idException("ID is too long");    
+                    }  
+                    else if(newID.length()<6)
+                    {
+                        throw new idException("ID is too short"); 
+                    }
                     else if(Student.findPerson(personArr, newID)!=null)//check to make sure ID is not already in the personArr
                     {
-                        System.out.println("\n"+newID+ " is already in the system.");//display if id is a duplicate
-                        continue;
+                        throw new idException("ID already exists in Personel record");
                     }
+                    else if(newID.length()==6)
+                    {
+                      for(int i=0; i<6; i++)
+                        {
+                          if(i<2&&newID.charAt(i)<97||newID.charAt(i)>122)//checks to make sure first two characters are lowercase letters
+                              throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+            
+                          else if(i>=2&&newID.charAt(i)<48||newID.charAt(i)>57)//checks to make sure remaining characters are digits
+                            throw new idException("ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]"); 
+                        }
+                    }
+
                     else
                         break; //if newID is valid, exit the do while
+                  }
+                  catch (idException e)
+                    {
+                      System.out.println(e);
+                    }
 
 
                 }while(true);
