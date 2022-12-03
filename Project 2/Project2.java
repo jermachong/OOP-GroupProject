@@ -1,4 +1,3 @@
-
 /*
  * Project 2
  * Jeremy Achong, Jaime Chea, and Grace Maroon
