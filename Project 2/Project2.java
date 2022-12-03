@@ -95,7 +95,7 @@ public class Project2 {
                                     throw new idException(
                                             "ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]");
 
-                                if (i > 2 && newID.charAt(i) < 48 || i > 2 && newID.charAt(i) > 57)// checks to make
+                                if (i >= 2 && newID.charAt(i) < 48 || i >= 2 && newID.charAt(i) > 57)// checks to make
                                                                                                    // sure remaining
                                                                                                    // characters are
                                                                                                    // digits
@@ -221,14 +221,14 @@ public class Project2 {
                             throw new idException("ID already exists in Personel record");
                         } else if (newID.length() == 6) {
                             for (int i = 0; i < 6; i++) {
-                                if (i < 2 && newID.charAt(i) < 97 || i < 2 && newID.charAt(i) > 122)// checks to make
+                                if (i < 1  && newID.charAt(i) < 97 || i < 1 && newID.charAt(i) > 122)// checks to make
                                                                                                     // sure first two
                                                                                                     // characters are
                                                                                                     // lowercase letters
                                     throw new idException(
                                             "ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]");
 
-                                if (i > 2 && newID.charAt(i) < 48 || i > 2 && newID.charAt(i) > 57)// checks to make
+                                if (i >= 2 && newID.charAt(i) < 48 || i >= 2 && newID.charAt(i) > 57)// checks to make
                                                                                                    // sure remaining
                                                                                                    // characters are
                                                                                                    // digits
@@ -402,7 +402,7 @@ public class Project2 {
                                     throw new idException(
                                             "ID is not formatted correctly. ID format should be [letter letter digit digit digit digit]");
 
-                                if (i > 2 && newID.charAt(i) < 48 || i > 2 && newID.charAt(i) > 57)// checks to make
+                                if (i >= 2 && newID.charAt(i) < 48 || i >= 2 && newID.charAt(i) > 57)// checks to make
                                                                                                    // sure remaining
                                                                                                    // characters are
                                                                                                    // digits
@@ -520,57 +520,64 @@ public class Project2 {
             }
 
             else if (selection == '7') {
-                System.out.println("Would you like to create a report?");
+                System.out.println("Would you like to create a report? (y/n)");
 
-                String report = myScan.nextLine();
-                if (report.equals(""))// check to make sure nextLine did not take an empty space
-                {
-                    report = myScan.nextLine();
-                }
-
-                if (report.equalsIgnoreCase("Yes")) {
-                    PrintWriter writer = null; // create printwriter pointer
-
-                    Collections.sort(sList, new SortByCreditHour()); // sort students by credit hours
-
-                    // make sure report.txt is built
-                    try {
-                        writer = new PrintWriter("report.txt");
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                while(true){ //repeat loop until y || n
+                    String report = myScan.nextLine();
+                    if (report.equals(""))// check to make sure nextLine did not take an empty space
+                    {
+                        report = myScan.nextLine();
                     }
 
-                    // write faculty and staff to .txt
-                    writer.println("Faculty Members");
-                    for (Person p : personArr.getList()) {
-                        if (p instanceof Faculty == true) {
-                            String toPrint = p.print();
-                            writer.print(toPrint + "\n\n");
+                    if (report.equalsIgnoreCase("Y")) {
+                        PrintWriter writer = null; // create printwriter pointer
+
+                        Collections.sort(sList, new SortByCreditHour()); // sort students by credit hours
+
+                        // make sure report.txt is built
+                        try {
+                            writer = new PrintWriter("report.txt");
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    }
 
-                    writer.println("Staff Members");
-                    for (Person p : personArr.getList()) {
-                        if (p instanceof Staff == true) {
-                            String toPrint = p.print();
-                            writer.print(toPrint + "\n\n");
+                        // write faculty and staff to .txt
+                        writer.println("Faculty Members");
+                        for (Person p : personArr.getList()) {
+                            if (p instanceof Faculty == true) {
+                                String toPrint = p.print();
+                                writer.print(toPrint + "\n\n");
+                            }
                         }
+
+                        writer.println("Staff Members");
+                        for (Person p : personArr.getList()) {
+                            if (p instanceof Staff == true) {
+                                String toPrint = p.print();
+                                writer.print(toPrint + "\n\n");
+                            }
+                        }
+
+                        writer.println("Students sorted by Credit Hour"); // header
+
+                        for (Student s : sList) {
+                            // loop prints out all students
+                            String toPrint = s.print();
+                            writer.print(toPrint);
+                        }
+
+                        writer.close(); // close writer pointer
+                        break;
+
+                    } else if (report.equalsIgnoreCase("n")) {
+                        break;// exit do while
                     }
-
-                    writer.println("Students sorted by Credit Hour"); // header
-
-                    for (Student s : sList) {
-                        // loop prints out all students
-                        String toPrint = s.print();
-                        writer.print(toPrint);
+                    else {
+                        System.out.println("Invalid entry. (y or n)");
+                        continue; 
                     }
-
-                    writer.close(); // close writer pointer
-                    break;
-
-                } else if (report.equalsIgnoreCase("no")) {
-                    break;// exit do while
                 }
+                break;
             } else
                 System.out.println("Invalid entry- please try again ");// display statement if input is invalid
         } while (selection != 7);
