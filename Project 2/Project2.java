@@ -1,4 +1,3 @@
-
 /*
  * Project 2
  * Jeremy Achong, Jaime Chea, and Grace Maroon
@@ -8,7 +7,7 @@ import java.lang.Math;
 import java.util.*;
 import java.io.*;
 
-public class Project2 {
+public class Main {
     public static void main(String[] args) {
         Scanner myScan = new Scanner(System.in); // scanner object for input
 
@@ -44,6 +43,7 @@ public class Project2 {
 
                 // Get Name
                 do {
+                  try{
                     System.out.print("\tName of the faculty member: ");
 
                     newName = myScan.nextLine();// scan in line input
@@ -52,15 +52,26 @@ public class Project2 {
                         newName = myScan.nextLine();
                     }
 
-                    if (newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) // check to make
+                    if (newName.equals(null) || newName.length() == 1) // check to make
                                                                                                        // sure name is
                                                                                                        // not blank or
                                                                                                        // too short
                     {
-                        System.out.println("\tPlease enter a name");
-                        continue;
+                        throw new Exception("Name length is invalid!");
                     } else {
+                      for(int i=0; i<newName.length(); i++)
+                        {
+                          if ((newName.charAt(i)<=64&&newName.charAt(i)!=32)||(newName.charAt(i)>=91&&newName.charAt(i)<=96)||(newName.charAt(i)>=123))
+                          {
+                            throw new Exception("Name cannot contain numbers or special characters!");
+                          }
+                        }
                         break;// if input it valid, break the do while
+                    }
+                  }
+                  catch(Exception e)
+                    {
+                      System.out.println(e);
                     }
                 } while (true);
 
@@ -176,6 +187,7 @@ public class Project2 {
 
                 // Get Name
                 do {
+                    try{
                     System.out.print("\tName of the Student: ");
 
                     newName = myScan.nextLine();// scan in line input
@@ -184,17 +196,27 @@ public class Project2 {
                         newName = myScan.nextLine();
                     }
 
-                    if (newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) // check to make
+                    if (newName.equals(null) || newName.length() == 1) // check to make
                                                                                                        // sure name is
                                                                                                        // not blank or
                                                                                                        // too short
                     {
-                        System.out.println("\tPlease enter a name");
-                        continue;
-                    }
-
-                    else
+                        throw new Exception("Name length is invalid!");
+                    } else {
+                      for(int i=0; i<newName.length(); i++)
+                        {
+                          if ((newName.charAt(i)<=64&&newName.charAt(i)!=32)||(newName.charAt(i)>=91&&newName.charAt(i)<=96)||(newName.charAt(i)>=123))
+                          {
+                            throw new Exception("Name cannot contain numbers or special characters!");
+                          }
+                        }
                         break;// if input it valid, break the do while
+                    }
+                  }
+                  catch(Exception e)
+                    {
+                      System.out.println(e);
+                    }
                 } while (true);
 
                 // Get ID
@@ -248,27 +270,42 @@ public class Project2 {
 
                 // Get GPA
                 do {
+                  try{
                     System.out.print("\tGPA: ");
                     newGPA = myScan.nextDouble();// scan in double to newGPA
 
                     if (newGPA > 4.0 || newGPA < 0.0) {// make sure newGPA isnt less than 0 or more than 4.0
-                        System.out.println("\tGPA input invalid. Please try again.");
-                        continue;
-                    } else
-                        break;// if input is valid, break the do while
+                        throw new Exception ("GPA input invalid. Please try again");
+                    }
+                    break;
+                  }
+                    catch (Exception e)
+                    {
+                      System.out.println(e);
+                      myScan.next();
+                    }
+
 
                 } while (true);
 
                 // Get Credit Hours
                 do {
+                  try{
                     System.out.print("\tCredit Hours: ");
                     newHours = myScan.nextInt();// scan in int to newHours
 
                     if (newHours < 0) {// check to make sure newHours is not less than 0
-                        System.out.println("\tCredit Hours input invalid. Please try again.");
-                        continue;
-                    } else// if input is valid, break the do while
-                        break;
+                        throw new Exception("Credit hours cannot be less than 0");
+                    } 
+                    break;
+                  }
+                  catch (Exception e)
+                    {
+                      System.out.println(e+ " Please enter a whole number.");
+                      
+                      myScan.next();
+                      
+                    }
                 } while (true);
 
                 // Create Student 's', add info.
@@ -351,24 +388,36 @@ public class Project2 {
 
                 // Get Name
                 do {
-                    System.out.print("\tName of the faculty member: ");
-                    newName = myScan.nextLine();// scan in line as newName
+try{
+                    System.out.print("\tName of the staff member: ");
 
+                    newName = myScan.nextLine();// scan in line input
                     if (newName.equals(""))// check to make sure nextLine did not take an empty space
                     {
                         newName = myScan.nextLine();
                     }
 
-                    if (newName.equals(null) || newName.length() == 1 || newName.matches(".*[0-9].*")) // makes sure
-                                                                                                       // name isnt null
-                                                                                                       // and is a
-                                                                                                       // proper length
+                    if (newName.equals(null) || newName.length() == 1) // check to make
+                                                                                                       // sure name is
+                                                                                                       // not blank or
+                                                                                                       // too short
                     {
-                        System.out.println("\tPlease enter a name");// display if name is not valid
-                        continue;
-                    } else
-                        break;// if name is valid, exit do while
-
+                        throw new Exception("Name length is invalid!");
+                    } else {
+                      for(int i=0; i<newName.length(); i++)
+                        {
+                          if ((newName.charAt(i)<=64&&newName.charAt(i)!=32)||(newName.charAt(i)>=91&&newName.charAt(i)<=96)||(newName.charAt(i)>=123))
+                          {
+                            throw new Exception("Name cannot contain numbers or special characters!");
+                          }
+                        }
+                        break;// if input it valid, break the do while
+                    }
+                  }
+                  catch(Exception e)
+                    {
+                      System.out.println(e);
+                    }
                 } while (true);
 
                 // Get ID
@@ -773,133 +822,4 @@ abstract class Employee extends Person {
         this.department = department;
     }
 
-}
-
-class Faculty extends Employee {
-    private String rank; // professor or adjunct
-
-    // Setters
-    public void setRank(String rank) {
-        this.rank = rank; // set Employee's rank to new rank
-    }
-
-    // Getters
-    public String getRank() {
-        return rank; // return Employee's rank
-    }
-
-    // Constructors
-    public Faculty() {
-        // assign blank values to all variables
-        super("", "", "");
-        this.rank = "";
-    }
-
-    public Faculty(String fullName, String id, String department, String rank) {
-        // assign given values to all variables
-        super(fullName, id, department);
-        this.rank = rank;
-    }
-
-    // print info for faculty (department + rank)
-    public String print() {
-        String toPrint;
-        toPrint = super.printPersonInfo() + "\n\t" + this.getDepartment() + " Department, " + this.getRank()
-                + "\n---------------------------";// display statement
-        return toPrint;
-    }
-
-}
-
-class Staff extends Employee {
-    private String status; // part time or full time
-
-    // Setters
-    public void setStatus(String status) {
-        this.status = status; // set Staff status to new Status
-    }
-
-    // Getters
-    public String getStatus() {
-        return status; // return Staff status
-    }
-
-    // Constructors
-    public Staff()// default constructor
-    {
-        // assign blank values to all variables
-        super("", "", "");
-        this.status = "";
-    }
-
-    public Staff(String fullName, String id, String department, String status) {
-        // assign given values to all variables
-        super(fullName, id, department);
-        this.status = status;
-    }
-
-    // print info for staff (department + status)
-    public String print() {
-        String toPrint;
-        toPrint = super.printPersonInfo() + "\n\t" + this.getDepartment() + " Department, " + this.getStatus()
-                + "\n---------------------------";// display statement
-        return toPrint;
-    }
-}
-
-// Creates array of Person
-class Personnel {
-    private Person[] list; // declare private variable
-
-    // constructors
-    public Personnel() {
-        // define Personnel's list
-        list = new Person[100];
-    }
-
-    public Personnel(int listSize) {
-        // define Personnel's list with custom size
-        list = new Person[listSize];
-    }
-
-    // retrieve array of Persons
-    public Person[] getList() {
-        return list;
-    }
-
-    // find next empty spot in array and add person object to array.
-    public void addTo(Personnel list, Person p) {
-        int i;
-        for (i = 0; i < list.getList().length; i++) {
-            if (list.getList()[i] == null)// find first available space in list
-
-            {
-                list.getList()[i] = p;
-                break;
-            }
-        }
-
-        if (i > list.getList().length)
-            System.out.println("List is full!");// display if no spot is found for person p
-
-    }
-
-}
-
-// Sorts array list of students by credit hour
-class SortByCreditHour implements Comparator<Student> {
-    public int compare(Student a, Student b) {
-        if (a.getCreditHours() == b.getCreditHours())
-            return 0;
-        else if (a.getCreditHours() > b.getCreditHours())
-            return 1;
-        else
-            return -1;
-    }
-}
-
-class idException extends Exception {
-    public idException(String errorMessage) {
-        super(errorMessage);
-    }
 }
