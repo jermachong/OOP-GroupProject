@@ -96,7 +96,7 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
 
 
         }
-        // Add Student
+        // Add Student person thing
         else if(selection == 2){ // Get Student info
             System.out.println("Enter the student info:");
             // Get Name
